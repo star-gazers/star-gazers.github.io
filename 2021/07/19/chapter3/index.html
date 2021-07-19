@@ -6,22 +6,20 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>My first blog | Hexo</title>
+  <title>嗑西瓜书——线性回归篇 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我的第一篇博客">
+  <meta name="description" content="Chapter3-线性模型">
 <meta property="og:type" content="article">
-<meta property="og:title" content="My first blog">
-<meta property="og:url" content="http://example.com/2021/03/17/My-first-blog/index.html">
+<meta property="og:title" content="嗑西瓜书——线性回归篇">
+<meta property="og:url" content="http://example.com/2021/07/19/chapter3/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="我的第一篇博客">
+<meta property="og:description" content="Chapter3-线性模型">
 <meta property="og:locale" content="en_US">
-<meta property="og:image" content="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1173562470,192467378&amp;fm=26&amp;gp=0.jpg">
-<meta property="article:published_time" content="2021-03-17T05:14:24.000Z">
-<meta property="article:modified_time" content="2021-04-03T15:43:28.103Z">
+<meta property="article:published_time" content="2021-07-19T15:49:47.000Z">
+<meta property="article:modified_time" content="2021-07-19T16:08:20.845Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="随笔">
+<meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1173562470,192467378&amp;fm=26&amp;gp=0.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -165,45 +163,100 @@
           <div id="js-content" class="content-ll">
             
 }
-<article id="post-My-first-blog" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-chapter3" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      My first blog
+      嗑西瓜书——线性回归篇
     </h1>
   
 
         
-        <a href="/2021/03/17/My-first-blog/" class="archive-article-date">
-  	<time datetime="2021-03-17T05:14:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-17</time>
+        <a href="/2021/07/19/chapter3/" class="archive-article-date">
+  	<time datetime="2021-07-19T15:49:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-19</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="我的第一篇博客"><a href="#我的第一篇博客" class="headerlink" title="我的第一篇博客"></a>我的第一篇博客</h1><span id="more"></span>
-<h2 id="二级标题"><a href="#二级标题" class="headerlink" title="二级标题"></a>二级标题</h2><h2 id="段落"><a href="#段落" class="headerlink" title="段落"></a>段落</h2><p>这是第一个段落</p>
-<h2 id="区块引用"><a href="#区块引用" class="headerlink" title="区块引用"></a>区块引用</h2><blockquote>
-<p>这段会高亮显示</p>
-</blockquote>
-<h2 id="超链接引用"><a href="#超链接引用" class="headerlink" title="超链接引用"></a>超链接引用</h2><p><a target="_blank" rel="noopener" href="https://github.com/star-gazers">我的github</a></p>
-<h2 id="图片显示"><a href="#图片显示" class="headerlink" title="图片显示"></a>图片显示</h2><p><img src="https://ss2.bdstatic.com/70cFvnSh_Q1YnxGkpoWK1HF6hhy/it/u=1173562470,192467378&amp;fm=26&amp;gp=0.jpg" alt="我的icon"></p>
-<h2 id="无序列表"><a href="#无序列表" class="headerlink" title="无序列表"></a>无序列表</h2><ul>
-<li>蜘蛛侠</li>
-<li>蝙蝠侠</li>
-<li>超胆侠</li>
-</ul>
-<h2 id="有序列表"><a href="#有序列表" class="headerlink" title="有序列表"></a>有序列表</h2><ol>
-<li>钢铁侠</li>
-<li>绿巨人</li>
+        <h1 id="Chapter3-线性模型"><a href="#Chapter3-线性模型" class="headerlink" title="Chapter3-线性模型"></a>Chapter3-线性模型</h1><span id="more"></span>
+<p>线性模型试图学得一个通过对属性线性组合来进行预测的函数，基本形式如下：</p>
+<script type="math/tex; mode=display">
+f(x) = w^T x + b</script><p>确定了 $w$和 $b$，则模型就确定下来。</p>
+<p>优点：形式简单，易于建模；可解释性强：<strong>$w$ 表达了各个属性在预测中的重要性</strong>。</p>
+<h2 id="线性回归"><a href="#线性回归" class="headerlink" title="线性回归"></a>线性回归</h2><p>我们可以用线性模型来做简单的回归任务，即根据样本的属性预测样本的标签值。</p>
+<p>均方误差是回归任务中常用的性能度量，其几何意义是<strong>欧几里得距离</strong>。</p>
+<p>基于均方误差求解的方法即为最小二乘法，目标是找出一条直线使所有样本到直线距离之和最小。</p>
+<p>广义线性模型：</p>
+<script type="math/tex; mode=display">
+y  = g^{-1}(w^Tx+b)</script><p>其中 $g(\cdot)$ 连续且充分光滑，$g(\cdot) = ln(\cdot)$ 则为对数线性回归。 </p>
+<h2 id="对数几率回归"><a href="#对数几率回归" class="headerlink" title="对数几率回归"></a>对数几率回归</h2><p>将回归任务和分类任务连接起来的，是对数几率函数：</p>
+<script type="math/tex; mode=display">
+\sigma(x) = \frac{1}{1 +e ^{-x}}</script><p>易得：</p>
+<script type="math/tex; mode=display">
+ln \frac{y}{1-y} = w^T x+ b</script><p>解释：$y $ 为正例的概率， $1-y$ 为反例的可能性，二者的比值 $\frac{y}{1-y}$ 称为几率（odds），反应了 $x$ 作为正例的<strong>相对可能性</strong>，取对数即为对数几率函数。</p>
+<p>实际上，我们是用线性回归的预测结果去逼近真实标记的对数几率。</p>
+<p>优点：</p>
+<ol>
+<li>直接对分类可能性进行建模，无需假设数据分布，避免了假设不正确带来的问题</li>
+<li>不仅预测出类别，同时得到近似概率预测</li>
+<li>对数几率函数任意阶可导，便于求解</li>
 </ol>
-<h2 id="分隔线"><a href="#分隔线" class="headerlink" title="分隔线"></a>分隔线</h2><hr>
-<h2 id="音乐播放器"><a href="#音乐播放器" class="headerlink" title="音乐播放器"></a>音乐播放器</h2><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=1318733599&auto=0&height=66"></iframe>
+<h2 id="LDA"><a href="#LDA" class="headerlink" title="LDA"></a>LDA</h2><p>线性判别分析（Linear Discriminant Analysis）是一种经典的线性学习方法，其思想是：给定训练集，将样本投影到一条直线上，使得<strong>同类别样本的投影点尽可能接近、不同类别的投影点尽可能远离</strong>；对新样本进行预测时，先进行投影，再根据投影点进行预测。</p>
+<p>最大化目标（以二分类为例）：</p>
+<ol>
+<li>定义类内散度距离 $S_w$ 为：第 0 类样本距离  0 类中心的距离之和 + 第  1 类样本距离第 1 类中心的距离之和</li>
+<li>定义类间散度距离 $S_b$ 为：第 0 类中心和第 1 类中心的距离</li>
+<li>最大化：$ J = \frac{w^TS_bw}{w^TS_ww}$，即 $S_b$ 与 $S_w$ 的广义瑞利商（PS：不知道和大物的瑞利判据有没有什么关系）</li>
+</ol>
+<p>求解 $w$ 的方法：<strong>解与 $w$ 长度无关，只关乎其方向（投影到直线上，$w$ 决定其方向）</strong>，使用拉格朗日乘子法解得：</p>
+<script type="math/tex; mode=display">w = S_w^{-1}(\mu_0 - \mu_1)$$ $u_0$ 和 $\mu_1$ 为两个类别中心，实作中考虑到数值稳定性先对 $S_w$ 进行奇异值分解得到 $S_w = U\Sigma U^T$ 后再通过 $S_w^{-1} = U\Sigma^{-1} U^T$ 求得。
 
+推广到多分类中：
+
+1. 修改类内散度 $S_w$ 为各个类别距离该类中心距离之和（2 -> N）
+2. 类间散度 $ S_b$ ：各个类到样本中心距离之和 $S_t$  - 类内散度$S_w$ 
+
+通过找到 W 来 maximize  $\frac{tr(W^TS_bW)}{tr(W^TS_wW)}$ 完成多分类任务，其闭式解为 $S_w^{-1}S_b$ 的 $d'$ 个最大非零广义特征值对应的特征向量构成的矩阵（PS：没看懂）
+
+**若将 $W$ 视作一个投影矩阵，那么 LDA 事实上将样本投影到 $d'$ 维空间，$d'$ 通常小于原有属性数目 $d$**。因此，LDA 同时也成为一种经典的监督将为技术，来将高维向量投影至低维空间并保留其部分类别信息（Word Embedding 的可视化就可以使用 LDA）。
+
+## 多分类学习
+
+一些二分类学习方法可以直接推广到多分类，比如 LDA，但在很多情况下，我们会将多分类问题**转化为二分类**进而来解决。如何转化，或者说将多分类任务拆分为多个二分类任务是关键。最经典的拆分策略有三种：OvO（一对一）、OvR（一对其余）以及MvM（多对多）。
+
+1. OvO：将 N 个类别两两配对，产生 N(N-1)/2 个分类器，使用这些分类器对样本进行预测，最终结果通过投票产生：取预测得最多的类别作为分类结果。
+2. OvR：每次将一个类作为正例，剩余作为反例，训练 N 个分类器，测试时若只有一个分类器预测为正例，则类别为该分类器对应为正例的类别；若有多个，根据置信度来挑选。
+3. MvM：若干个类别作为正例，若干个作为反例，其构造需要有特殊的设计，常用的技术有纠错输出码。
+   1. 编码： 对 N 个类别做 M 次划分，每次划分一部分作为正类一部分反类，得到 M 个训练集和 M 个分类器
+   2. 解码：用 M 个分类器进行预测，预测表及组成一个编码，用该编码和类别编码进行比较，返回距离最小的作为结果
+
+## 类别不平衡的处理方法
+
+训练集中的样本类别数目如果有较大差距，对于学习会产生很大影响，例如，10000 样本中 只有 2 个反例，那么即使预测全为正例的分类器也能达到 99.8% 的准确率，但是这没有任何意义。这种情况就称之为类别不平衡（class-imbalance）。
+
+根据之前的内容，我们可以得到，分类器分类的是用预测的 $y$ 值同一个阈值进行比较，若大于阈值则判定为正例，反之为反例。比如，阈值设置为 0.5，即认为正例和反例出现可能性相同，即$ \frac{y}{1-y} > 1$ 时判定为正例。
+
+但是类别不平衡时，假设正例数目为 $m^+$，反例为 $m^-$，则观测几率为 $\frac{m^+}{m^-}$。若我们认为训练集是对真实样本的**无偏采样**，则观测几率代表真实几率。于是，当正例出现的相对几率大于真实几率时，判定为正例，即：</script><p> \frac{y}{1-y} &gt; \frac{m^+}{m^-}</p>
+<script type="math/tex; mode=display">
+我们通过使用再平衡（rescaling）， 来把右侧的这个 `1` 调整为观测几率：</script><p>\frac{y’}{1-y’} = \frac{y}{1-y} \times \frac{m^+}{m^-}</p>
+<p>$$<br>这种手段称之为<strong>阈值移动</strong></p>
+<p>还有两种通过人为改变训练集的类别比例来消除类别不平衡的影响的手段：</p>
+<ol>
+<li>欠采样（undersampling）：去除一些出现较多的类别的样本，使得两个类别数目相近</li>
+<li>过采样（oversampling）：增加一些出现较少的类别的样本</li>
+</ol>
+<p>注意点：</p>
+<ol>
+<li>欠采样速度比过采样快，因为一个是减小训练集一个是增加</li>
+<li>过采样不能简单的重复采样，否则会产生严重的过拟合</li>
+<li>欠采样的丢弃可能会造成信息的丢失</li>
+<li>再缩放技术和 Cost-Sensitive 有关联，是后者的基础</li>
+</ol>
 
       
 
@@ -238,7 +291,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
         		</li>
       		
 		</ul>
@@ -294,7 +347,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?s1ze=150x150&data=http://https://star-gazers.github.io021/03/17/My-first-blog/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?s1ze=150x150&data=http://https://star-gazers.github.io021/07/19/chapter3/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -308,15 +361,11 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/04/03/daily_knowledge/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          记录前端日常知识点——HTML、CSS
-        
-      </div>
-    </a>
   
+    <a href="/2021/04/18/grid/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">记录前端日常知识点——HTML、CSS</div>
+      <i class="icon-circle-right"></i>
+    </a>
   
 </nav>
 
@@ -341,7 +390,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E5%8D%9A%E5%AE%A2"><span class="toc-number">1.</span> <span class="toc-text">我的第一篇博客</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E7%BA%A7%E6%A0%87%E9%A2%98"><span class="toc-number">1.1.</span> <span class="toc-text">二级标题</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AE%B5%E8%90%BD"><span class="toc-number">1.2.</span> <span class="toc-text">段落</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8C%BA%E5%9D%97%E5%BC%95%E7%94%A8"><span class="toc-number">1.3.</span> <span class="toc-text">区块引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B6%85%E9%93%BE%E6%8E%A5%E5%BC%95%E7%94%A8"><span class="toc-number">1.4.</span> <span class="toc-text">超链接引用</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E7%89%87%E6%98%BE%E7%A4%BA"><span class="toc-number">1.5.</span> <span class="toc-text">图片显示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%97%A0%E5%BA%8F%E5%88%97%E8%A1%A8"><span class="toc-number">1.6.</span> <span class="toc-text">无序列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%89%E5%BA%8F%E5%88%97%E8%A1%A8"><span class="toc-number">1.7.</span> <span class="toc-text">有序列表</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E9%9A%94%E7%BA%BF"><span class="toc-number">1.8.</span> <span class="toc-text">分隔线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9F%B3%E4%B9%90%E6%92%AD%E6%94%BE%E5%99%A8"><span class="toc-number">1.9.</span> <span class="toc-text">音乐播放器</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter3-%E7%BA%BF%E6%80%A7%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.</span> <span class="toc-text">Chapter3-线性模型</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BA%BF%E6%80%A7%E5%9B%9E%E5%BD%92"><span class="toc-number">1.1.</span> <span class="toc-text">线性回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E6%95%B0%E5%87%A0%E7%8E%87%E5%9B%9E%E5%BD%92"><span class="toc-number">1.2.</span> <span class="toc-text">对数几率回归</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#LDA"><span class="toc-number">1.3.</span> <span class="toc-text">LDA</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
