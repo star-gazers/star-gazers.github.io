@@ -6,15 +6,24 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: 机器学习 | Hexo</title>
+  <title>嗑西瓜书——决策树篇 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.html">
+  <meta name="description" content="Chapter 4 决策树">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嗑西瓜书——决策树篇">
+<meta property="og:url" content="http://example.com/2021/07/23/chapter4/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Chapter 4 决策树">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/dt_algorithm.png">
+<meta property="og:image" content="http://example.com/img/dt_boundary.png">
+<meta property="og:image" content="http://example.com/img/multi_variable.png">
+<meta property="article:published_time" content="2021-07-22T17:07:47.000Z">
+<meta property="article:modified_time" content="2021-07-22T17:07:46.707Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/dt_algorithm.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -157,35 +166,85 @@
           </div>
           <div id="js-content" class="content-ll">
             
+}
+<article id="post-chapter4" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      嗑西瓜书——决策树篇
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/07/23/chapter4/" class="archive-article-date">
+
+        
+        <a href="/2021/07/23/chapter4/" class="archive-article-date">
   	<time datetime="2021-07-22T17:07:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-23</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/07/23/chapter4/">嗑西瓜书——决策树篇</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Chapter-4-决策树"><a href="#Chapter-4-决策树" class="headerlink" title="Chapter 4 决策树"></a>Chapter 4 决策树</h1><span id="more"></span>
+<h2 id="Overview"><a href="#Overview" class="headerlink" title="Overview"></a>Overview</h2><p>决策树，根据属性构造节点进行划分，<strong>可解释性强</strong></p>
+<p><img src="/../img/dt_algorithm.png" alt="Algorithm"></p>
+<p><strong>情形 2 利用的是当前节点的后验分布，情形 3 利用当前节点的父类的先验分布</strong></p>
+<h2 id="划分选择"><a href="#划分选择" class="headerlink" title="划分选择"></a>划分选择</h2><h3 id="Information-Entropy-Based"><a href="#Information-Entropy-Based" class="headerlink" title="Information Entropy Based"></a>Information Entropy Based</h3><p>信息增益，衡量集合 $D$ 的纯度</p>
+<script type="math/tex; mode=display">
+Ent(D)  = - \sum_{k=1}^{|Y|} p_k log_2 p_k</script><p> $p_k$为 集合 $D$ 中 $k$ 类样本所占比例</p>
+<p>通过选择属性划分前后的<strong>信息熵</strong>之差，即信息增益来作为选取划分属性的指标（ID3 算法）。 我们选取带来信息增益最大的属性划分作为最优划分属性。</p>
+<p>然而，信息增益准则对可取值数目较多的属性有所偏好，<strong>因为属性的分类越多，增益也就可能越大</strong>（why?）。为解决这个问题，著名的 C4.5 算法 在增益值下面除以一个 $IV(a)$ 来缓解这一影响，类似进行一个 Normalization 操作：</p>
+<script type="math/tex; mode=display">
+ IV(a) = - \sum_{v=1}^{V} \frac{|D^v|}{|D|} log_2 \frac{|D^v|}{|D|}</script><p>然而，信息增益率可能对属性类别较少的属性具有偏好，因此将增益值和增益率结合，先选取<strong>信息增益高于平均水平的属性，再从中选取增益率最高的属性</strong>，来平衡这两个偏好。</p>
+<h3 id="Gini-Index-Based"><a href="#Gini-Index-Based" class="headerlink" title="Gini Index Based"></a>Gini Index Based</h3><p>集合的纯度还可以使用基尼值（Gini Index）来度量：</p>
+<script type="math/tex; mode=display">
+Gini(D) = 1 - \sum_{k=1}^{|Y|} p_k^2</script><p>CART 选择用基尼指数来进行最优划分属性的选择，属性 $a$的基尼指数定义为根据 $a$ 划分后各个属性类内加权的基尼指数之和，<strong>选基尼指数最小的属性作为最优</strong>。</p>
+<h3 id="Comparison"><a href="#Comparison" class="headerlink" title="Comparison"></a>Comparison</h3><p>Gini 指数的计算量较小，是标准库默认的划分方式；Entropy 的分类的树更为平衡</p>
+<h2 id="剪枝处理"><a href="#剪枝处理" class="headerlink" title="剪枝处理"></a>剪枝处理</h2><p>剪枝是决策树学习算法防止过拟合的手段，因为分支太多，会 overfitting。 </p>
+<p>泛化性能的判断：根据 Validation Set 上的效果（信息增益 etc）进行判断</p>
+<h3 id="预剪枝"><a href="#预剪枝" class="headerlink" title="预剪枝"></a>预剪枝</h3><p>在决策树生成过程中，对每个节点在划分之前进行估计，若不能带来泛化能力的提升，则停止分裂并将当前节点标记为叶子节点。</p>
+<p>Advantage：降低过拟合、减少训练开销；</p>
+<p>Disadvantages：贪心策略，可能不是全局最优，造成欠拟合</p>
+<h3 id="后剪枝"><a href="#后剪枝" class="headerlink" title="后剪枝"></a>后剪枝</h3><p>决策树生成后，自底向上对非叶子节点进行考察，若将其替换为叶子节点能带来泛化能力的提升，则替换之</p>
+<p>Advantage：欠拟合风险小，泛化性能一般优于预剪枝</p>
+<p>Disadvantage：训练开销大</p>
+<h2 id="连续和缺失"><a href="#连续和缺失" class="headerlink" title="连续和缺失"></a>连续和缺失</h2><h3 id="连续属性值"><a href="#连续属性值" class="headerlink" title="连续属性值"></a>连续属性值</h3><p>前面提到的属性如果取值是连续的，即其属性集合大小不再是有限的，通过<strong>连续属性离散化</strong>将其转化为离散，最简单的策略即<strong>二分法</strong>：判断某一属性值是否大于 threshold ，这个阈值一般可以设置为不大于属性取值中位数的最大值，从而确保阈值在训练集中出现过。</p>
+<h3 id="缺失值处理"><a href="#缺失值处理" class="headerlink" title="缺失值处理"></a>缺失值处理</h3><p>给样本的缺失属性值进行补全，补全是基于有属性的样本的属性取值概率的权重进行。从而使样本以不同概率划入到不同的节点中去。</p>
+<h2 id="多变量决策树"><a href="#多变量决策树" class="headerlink" title="多变量决策树"></a>多变量决策树</h2><p>决策树实质是在一个高维空间中，利用与坐标轴平行的分类边界对样本进行划分。<strong>从而，每一个划分对应了某个属性的取值，具有较好的可解释性</strong>。而在一些复杂的情况下，边界可能需要很多段划分才能够实现，比如：</p>
+<p><img src="/../img/dt_boundary.png" alt="Complicated Boundary"></p>
+<p>斜的划分边界能提高效率，多变量决策树即使这样一种解决方式。<strong>其非叶节点不再仅针对某个属性，而是对属性的线性组合进行测试</strong>，即每个节点都是一个感知机，从而习得斜线分类边界:</p>
+<p><img src="/../img/multi_variable.png" alt="Multi Variable Decision Tree"></p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -197,57 +256,120 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?s1ze=150x150&data=http://https://star-gazers.github.io021/07/23/chapter4/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/07/19/chapter3/" class="archive-article-date">
-  	<time datetime="2021-07-19T15:49:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-19</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/07/19/chapter3/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">嗑西瓜书——线性回归篇</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/07/19/chapter3/">嗑西瓜书——线性回归篇</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-4-%E5%86%B3%E7%AD%96%E6%A0%91"><span class="toc-number">1.</span> <span class="toc-text">Chapter 4 决策树</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Overview"><span class="toc-number">1.1.</span> <span class="toc-text">Overview</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%92%E5%88%86%E9%80%89%E6%8B%A9"><span class="toc-number">1.2.</span> <span class="toc-text">划分选择</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Information-Entropy-Based"><span class="toc-number">1.2.1.</span> <span class="toc-text">Information Entropy Based</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gini-Index-Based"><span class="toc-number">1.2.2.</span> <span class="toc-text">Gini Index Based</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Comparison"><span class="toc-number">1.2.3.</span> <span class="toc-text">Comparison</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%AA%E6%9E%9D%E5%A4%84%E7%90%86"><span class="toc-number">1.3.</span> <span class="toc-text">剪枝处理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%84%E5%89%AA%E6%9E%9D"><span class="toc-number">1.3.1.</span> <span class="toc-text">预剪枝</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%8E%E5%89%AA%E6%9E%9D"><span class="toc-number">1.3.2.</span> <span class="toc-text">后剪枝</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E5%92%8C%E7%BC%BA%E5%A4%B1"><span class="toc-number">1.4.</span> <span class="toc-text">连续和缺失</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E7%BB%AD%E5%B1%9E%E6%80%A7%E5%80%BC"><span class="toc-number">1.4.1.</span> <span class="toc-text">连续属性值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BC%BA%E5%A4%B1%E5%80%BC%E5%A4%84%E7%90%86"><span class="toc-number">1.4.2.</span> <span class="toc-text">缺失值处理</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E5%8F%98%E9%87%8F%E5%86%B3%E7%AD%96%E6%A0%91"><span class="toc-number">1.5.</span> <span class="toc-text">多变量决策树</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
+  
+
+  
+
+  
+
 
 
           </div>
@@ -270,9 +392,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
