@@ -6,15 +6,26 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Tag: 机器学习 | Hexo</title>
+  <title>嗑西瓜书——支持向量机篇 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/index.html">
+  <meta name="description" content="Chapter 6 支持向量机">
+<meta property="og:type" content="article">
+<meta property="og:title" content="嗑西瓜书——支持向量机篇">
+<meta property="og:url" content="http://example.com/2021/07/29/06-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Chapter 6 支持向量机">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/6-1-Hyperplane.png">
+<meta property="og:image" content="http://example.com/img/6-2-Gap.png">
+<meta property="og:image" content="http://example.com/img/6-3-Support-Vector-and-Margin.png">
+<meta property="og:image" content="http://example.com/img/6-4-Common-Kernel-Functions.png">
+<meta property="og:image" content="http://example.com/img/6-5-Noise-Data.png">
+<meta property="article:published_time" content="2021-07-29T11:08:47.000Z">
+<meta property="article:modified_time" content="2021-07-29T16:56:59.121Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/6-1-Hyperplane.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -157,35 +168,140 @@
           </div>
           <div id="js-content" class="content-ll">
             
+}
+<article id="post-06-支持向量机" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      嗑西瓜书——支持向量机篇
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/07/29/06-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" class="archive-article-date">
+
+        
+        <a href="/2021/07/29/06-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" class="archive-article-date">
   	<time datetime="2021-07-29T11:08:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-29</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/07/29/06-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">嗑西瓜书——支持向量机篇</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="Chapter-6-支持向量机"><a href="#Chapter-6-支持向量机" class="headerlink" title="Chapter 6 支持向量机"></a>Chapter 6 支持向量机</h1><span id="more"></span>
+<p>&emsp;&emsp;上篇主要介绍了神经网络。首先从生物学神经元出发，引出了它的数学抽象模型—MP神经元以及由两层神经元组成的感知机模型，并基于梯度下降的方法描述了感知机模型的权值调整规则。由于简单的感知机不能处理线性不可分的情形，因此接着引入了含隐层的前馈型神经网络，BP神经网络则是其中最为成功的一种学习方法，它使用误差逆传播的方法来逐层调节连接权。最后简单介绍了局部/全局最小以及目前十分火热的深度学习的概念。本篇围绕的核心则是曾经一度取代过神经网络的另一种监督学习算法——<strong>支持向量机</strong>（Support Vector Machine），简称<strong>SVM</strong>。<br>&emsp;&emsp;支持向量机是一种经典的二分类模型，基本模型定义为特征空间中最大间隔的线性分类器，其学习的优化目标便是间隔最大化，因此支持向量机本身可以转化为一个凸二次规划求解的问题。</p>
+<h3 id="函数间隔与几何间隔"><a href="#函数间隔与几何间隔" class="headerlink" title="函数间隔与几何间隔"></a>函数间隔与几何间隔</h3><p>&emsp;&emsp;对于二分类学习，假设现在的数据是线性可分的，这时分类学习最基本的想法就是找到一个合适的超平面，该超平面能够将不同类别的样本分开，类似二维平面使用$ax+by+c=0$来表示，超平面实际上表示的就是高维的平面，如下图所示：<br><br><center>
+<img style="border-radius: 0.3125em;box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="/../img/6-1-Hyperplane.png"><br><div style="color:orange; border-bottom: 1px solid #d9d9d9;display: inline-block;color: #000;padding: 2px;">图6-1 超平面</div></center></p>
+<p>&emsp;&emsp;对数据点进行划分时，易知：当超平面距离与它最近的数据点的间隔越大，分类的鲁棒性越好，即当新的数据点加入时，超平面对这些点的适应性最强，出错的可能性最小。因此需要让所选择的超平面能够最大化这个间隔Gap（如下图所示）， 常用的间隔定义有两种，一种称之为函数间隔，一种为几何间隔，下面将分别介绍这两种间隔，并对SVM为什么会选用几何间隔做了一些阐述。<br><br><center>
+<img style="border-radius: 0.3125em;box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="/../img/6-2-Gap.png"><br><div style="color:orange; border-bottom: 1px solid #d9d9d9;display: inline-block;color: #000;padding: 2px;">图6-2 间隔</div></center></p>
+<h4 id="函数间隔"><a href="#函数间隔" class="headerlink" title="函数间隔"></a>函数间隔</h4><p>&emsp;&emsp;在超平面$w^T x+b=0$确定的情况下，$|w^T x^<em>+b|$能够代表点$x^</em>$距离超平面的远近，易知：当$w^Tx^<em>+b&gt;0$时，表示$x^</em>$在超平面的一侧（正类，类标为1），而当$w^Tx^<em>+b&lt;0$时，则表示$x^</em>$在超平面的另外一侧（负类，类别为-1），因此$(w^Tx^<em>+b)y^</em>$ 的正负性恰能表示数据点$x^<em>$是否被分类正确。于是便引出了<em>*函数间隔</em></em> 的定义（functional margin）:<script type="math/tex">\hat{\gamma} = y(w^T x + b) = yf(x)</script>&emsp;&emsp;而超平面$(w,b)$关于所有样本点$(x_i,y_i)$的函数间隔最小值则为超平面在训练数据集T上的函数间隔：<script type="math/tex">\hat{\gamma}=\min \hat{\gamma}_i,\quad i=1,2,\dots,n</script>&emsp;&emsp;可以看出：这样定义的函数间隔在处理SVM上会有问题，当超平面的两个参数$w$和$b$同比例改变时，函数间隔也会跟着改变，但是实际上超平面还是原来的超平面，并没有变化。例如：$w_1 x_1+w_2 x_2+w_3 x_3+b=0$其实等价于$2w_1x_1+2w_2x_2+2w_3x_3+2b=0$，但计算的函数间隔却翻了一倍。从而引出了能真正度量点到超平面距离的概念——几何间隔（geometrical margin）。</p>
+<h4 id="几何间隔"><a href="#几何间隔" class="headerlink" title="几何间隔"></a>几何间隔</h4><p>&emsp;&emsp;<strong>几何间隔</strong>代表的则是数据点到超平面的真实距离，对于超平面$w^T x+b=0$，$w$代表的是该超平面的法向量，设$x^<em>$为超平面外一点$x$在法向量$w$方向上的投影点，$x$与超平面的距离为$\gamma$，则有$x^</em>=x-\gamma(|w| w)$，又$x^<em>$在超平面上，即$w^T x^</em>+b=0$，代入即可得：<script type="math/tex">\gamma=\frac{w^Tx+b}{\|w\|}=\frac{f(x)}{\|w\|}</script>为了得到$\gamma$的绝对值，令$\gamma$乘以其对应的类别$y$，即可得到几何间隔的定义：<script type="math/tex">\tilde{\gamma}=y\gamma = \frac{\hat{\gamma}}{\|w\|}</script>从上述函数间隔与几何间隔的定义可以看出：实质上函数间隔就是$|w^T x+b|$，而几何间隔就是点到超平面的距离。</p>
+<h3 id="最大间隔与支持向量"><a href="#最大间隔与支持向量" class="headerlink" title="最大间隔与支持向量"></a>最大间隔与支持向量</h3><p>&emsp;&emsp;通过前面的分析可知：函数间隔不适合用来最大化间隔，因此这里我们要找的最大间隔指的是几何间隔，于是最大间隔分类器的目标函数定义为：<script type="math/tex">\begin{array}{ll}
+{\max} & {\tilde{\gamma}} \\ 
+\text { s.t. } & y_i (w^T x_i+b ) = \hat{\gamma}_i \geqslant \hat{\gamma}, \quad i=1,2, \ldots, n\end{array}</script>一般地，我们令$\hat{\gamma}$为1（这样做的目的是为了方便推导和目标函数的优化），从而上述目标函数转化为：<script type="math/tex">\begin{array}{ll} \max & \displaystyle \frac{1}{\|w\|} \\ 
+\text { s.t. } & y_{i}(w^T x_i+b ) \geqslant 1, \quad i=1,2, \ldots, n \end{array}</script>&emsp;&emsp;对于$y(w^T x+b)=1$的数据点，即下图中位于$w^T x+b=1$或$w’x+b=-1$上的数据点，我们称之为<strong>支持向量</strong>（support vector），易知：对于所有的支持向量，它们恰好满足$y^<em>(w^Tx^</em>+b)=1$，而所有不是支持向量的点，有$y^<em>(w^Tx^</em>+b)&gt;1$。</p>
+<p><br><center>
+<img style="border-radius: 0.3125em;box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="/../img/6-3-Support-Vector-and-Margin.png"><br><div style="color:orange; border-bottom: 1px solid #d9d9d9;display: inline-block;color: #000;padding: 2px;">图6-3 支持向量与间隔</div></center></p>
+<h3 id="从原始优化问题到对偶问题"><a href="#从原始优化问题到对偶问题" class="headerlink" title="从原始优化问题到对偶问题"></a>从原始优化问题到对偶问题</h3><p>&emsp;&emsp;对于上述得到的目标函数，求$\displaystyle \frac{1}{|w|}$的最大值相当于求$|w|^2$的最小值，因此很容易将原来的目标函数转化为：<script type="math/tex">\begin{array}{l} \max & \displaystyle \frac{1}{2}\|w\|^2 \\ 
+\text { s.t. } & y_{i}(w^T x_i+b ) \geqslant 1, \quad i=1,2, \ldots, n \end{array}</script>&emsp;&emsp;即变为了一个带约束的凸二次规划问题，按书上所说可以使用现成的优化计算包（QP优化包）求解，但由于SVM的特殊性，一般我们将原问题变换为它的<strong>对偶问题</strong>，接着再对其对偶问题进行求解。为什么通过对偶问题进行求解，有下面两个原因：</p>
+<ul>
+<li>一是因为使用对偶问题更容易求解；</li>
+<li>二是因为通过对偶问题求解出现了向量内积的形式，从而能更加自然地引出核函数。</li>
+</ul>
+<p>&emsp;&emsp;对偶问题，顾名思义，可以理解成优化等价的问题，更一般地，是将一个原始目标函数的最小化转化为它的对偶函数最大化的问题。对于当前的优化问题，首先我们写出它的朗格朗日函数：<script type="math/tex">L(w, b, \alpha)=\frac{1}{2}\|w\|^2-\sum_{i=1}^n \alpha_i\left(y_i (w^T x_i+b )-1 \right)</script>&emsp;&emsp;上式很容易验证：当其中有一个约束条件不满足时，$L$的最大值为$\infty$（只需令其对应的$\alpha$为 $\infty$即可）；当所有约束条件都满足时，$L$的最大值为$\displaystyle \frac{1}{2}|w|^2$（此时令所有的$\alpha$为0），因此实际上原问题等价于：<script type="math/tex">\min_{w, b} \theta(w)=\min_{w, b} \max_{\alpha_i \geqslant 0} L(w, b, \alpha)=p^*</script>&emsp;&emsp;由于这个的求解问题不好做，因此一般我们将最小和最大的位置交换一下（需满足KKT条件） ，变成原问题的对偶问题：<script type="math/tex">\max_{\alpha_i \geqslant 0} \min_{w, b} L(w, b, \alpha)=d^*</script>&emsp;&emsp;这样就将原问题的求最小变成了对偶问题求最大（用对偶这个词还是很形象），接下来便可以先求$L$对$w$和$b$的极小，再求$L$对$\alpha$的极大。<br>（1）首先求$L$对$w$和$b$的极小，分别求$L$关于$w$和$b$的偏导，可以得出：<script type="math/tex">\begin{aligned} \frac{\partial L}{\partial w} &=0 \Rightarrow w=\sum_{i=1}^n \alpha_i y_i x_i \\ 
+\frac{\partial L}{\partial b} &=0 \Rightarrow \sum_{i=1}^n \alpha_i y_i=0 \end{aligned}</script>将上述结果代入$L$得到：<script type="math/tex">\begin{aligned} L(w,b,\alpha) 
+&= \frac{1}{2} \sum_{i,j=1}^n \alpha_i \alpha_j y_i y_j x_i^T x_j - \sum_{i,j=1}^n \alpha_i \alpha_j y_i y_j x_i^T x_j - b \sum_{i=1}^n \alpha_i y_i + \sum_{i=1}^n \alpha_i \\
+&= \sum_{i=1}^n \alpha_i - \frac{1}{2} \sum_{i,j=1}^n \alpha_i \alpha_j y_i y_j x_i^T x_j
+\end{aligned}</script>上式只包含$\alpha$<br>（2）接着$L$关于$\alpha$极大求解$\alpha$（通过SMO算法求解，此处不做深入）。</p>
+<script type="math/tex; mode=display">\begin{array}{ll} \displaystyle \max_{\alpha} & \displaystyle \sum_{i=1}^n \alpha_i-\frac{1}{2} \sum_{i, j=1}^n \alpha_i \alpha_j y_i y_j x_i^T x_j \\ 
+{\text { s.t. }} & {\alpha_i \geqslant 0, i=1,\ldots, n} \\ 
+{} & {\displaystyle \sum_{i=1}^n \alpha_i y_i=0}
+\end{array}</script><p>（3）最后便可以根据求解出的$\alpha$，计算出$w$和$b$，从而得到分类超平面函数。</p>
+<script type="math/tex; mode=display">\begin{aligned} w^* &=\sum_{i=1}^n \alpha_i y_i x_i \\ 
+b^* &=-\frac{\displaystyle \max _{i : y_i=-1} w^{* T} x_i+\min _{i : y_i=1} w^{* T} x_i}{2} 
+\end{aligned}</script><p>&emsp;&emsp;在对新的点进行预测时，实际上就是将数据点$x^*$代入分类函数$f(x)=w^T x+b$中，若$f(x)&gt;0$，则为正类，$f(x)&lt;0$，则为负类，根据前面推导得出的$w$与$b$，分类函数如下所示，此时便出现了上面所提到的内积形式。</p>
+<script type="math/tex; mode=display">\begin{aligned} f(x)
+&= \left(\sum_{i=1}^n \alpha_i y_i x_i \right)^T x + b \\
+&= \sum_{i=1}^n \alpha_i y_i \langle x_i,x \rangle + b
+\end{aligned}</script><p>&emsp;&emsp;这里实际上只需计算新样本与支持向量的内积，因为对于非支持向量的数据点，其对应的拉格朗日乘子一定为0，根据最优化理论（K-T条件），对于不等式约束$y(w^T x+b)-1 \geqslant 0$，满足：<script type="math/tex">\partial_i(y_i(w^Tx_i+b)-1)=0(即总有一个为0)</script></p>
+<h3 id="核函数"><a href="#核函数" class="headerlink" title="核函数"></a>核函数</h3><p>&emsp;&emsp;由于上述的超平面只能解决线性可分的问题，对于线性不可分的问题，例如：异或问题，我们需要使用核函数将其进行推广。一般地，解决线性不可分问题时，常常采用<strong>映射</strong>的方式，将低维原始空间映射到高维特征空间，使得数据集在高维空间中变得线性可分，从而再使用线性学习器分类。如果原始空间为有限维，即属性数有限，那么总是存在一个高维特征空间使得样本线性可分。若$\emptyset$代表一个映射，则在特征空间中的划分函数变为：<script type="math/tex">f(x)=w^T \phi(x) + b</script>&emsp;&emsp;按照同样的方法，先写出新目标函数的拉格朗日函数，接着写出其对偶问题，求$L$关于$w$和$b$的极大，最后运用SOM求解$\alpha$。可以得出：<br>（1）原对偶问题变为：<script type="math/tex">\begin{array}{ll}
+{\displaystyle \max_{\alpha}} & {\displaystyle \sum_{i=1}^n \alpha_i-\frac{1}{2} \sum_{i, j=1}^n \alpha_i \alpha_j y_i y_j \left\langle\phi\left(x_i\right), \phi\left(x_j \right)\right\rangle} \\ 
+{\text { s.t. }} & {\alpha_i \geqslant 0, i=1, \ldots, n} \\ 
+{} & {\displaystyle \sum_{i=1}^n \alpha_i y_i=0}
+\end{array}</script>（2）原分类函数变为：<script type="math/tex">f(x)=\sum_{i=1}^n \alpha_i y_i\left\langle\phi\left(x_i\right), \phi(x)\right\rangle+ b</script>&emsp;&emsp;求解的过程中，只涉及到了高维特征空间中的内积运算，由于特征空间的维数可能会非常大，例如：若原始空间为二维，映射后的特征空间为5维，若原始空间为三维，映射后的特征空间将是19维，之后甚至可能出现无穷维，根本无法进行内积运算了，此时便引出了<strong>核函数</strong>（Kernel）的概念。</p>
+<blockquote>
+<p><strong>定义3（核：Kernel）</strong> 核是一个函数$K$，对所有$x,z \in \mathcal{X}$，满足$K(x,z)=\langle \phi(x), \phi(z) \rangle$，这里$\phi$是从$\mathcal{X}$到内积特征空间$\mathcal{F}$的映射  </p>
+</blockquote>
+<p>&emsp;&emsp;因此，核函数可以直接计算隐式映射到高维特征空间后的向量内积，而不需要显式地写出映射后的结果，它虽然完成了将特征从低维到高维的转换，但最终却是在低维空间中完成向量内积计算，与高维特征空间中的计算等效<strong>（低维计算，高维表现）</strong>，从而避免了直接在高维空间无法计算的问题。引入核函数后，原来的对偶问题与分类函数则变为：<br>（1）对偶问题：</p>
+<script type="math/tex; mode=display">\begin{aligned} \max_{\alpha} & \sum_{i=1}^n \alpha_i-\frac{1}{2} \sum_{i, j=1}^n \alpha_i \alpha_j y_i y_j K(x_i, x_j) \\
+\text { s.t. } & \alpha_i \geqslant 0, i=1, \ldots, n \\ 
+& \sum_{i=1}^n \alpha_i y_i=0 \end{aligned}</script><p>（2）分类函数：</p>
+<script type="math/tex; mode=display">f(x)=\sum_{i=1}^n \alpha_i y_i K(x_i, x)+b</script><p>&emsp;&emsp;因此，在线性不可分问题中，核函数的选择成了支持向量机的最大变数，若选择了不合适的核函数，则意味着将样本映射到了一个不合适的特征空间，则极可能导致性能不佳。同时，核函数需要满足以下这个必要条件：</p>
+<blockquote>
+<p><strong>定理6.1（核函数）</strong> 令$\mathcal{X}$为输入空间，$\kappa(\cdot, \cdot)$是定义在$\mathcal{X} \times \mathcal{X}$上的对称函数，则$\kappa$是核函数当且仅当对于任意数据$D={x_1,x_2,\ldots,x_m}$，“核矩阵”（kernel matrix）$\mathbf{K}$总是半正定的：</p>
+<script type="math/tex; mode=display">\mathbf{K}=\left[\begin{array}{ccccc}{\kappa\left(x_1, x_1\right)} & {\cdots} & {\kappa\left(x_1, x_j\right)} & {\cdots} & {\kappa\left(x_1, x_m\right)} \\ {\vdots} & {\ddots} & {\vdots} & {\ddots} & {\vdots} \\ {\kappa\left(x_i, x_1\right)} & {\cdots} & {\kappa\left(x_i, x_j\right)} & {\cdots} & {\kappa\left(x_i, x_m\right)} \\ {\vdots} & {\ddots} & {\vdots} & {\ddots} & {\vdots} \\ {\kappa\left(x_m, x_1\right)} & {\cdots} & {\kappa\left(x_m, x_j\right)} & {\cdots} & {\kappa\left(x_m, x_m\right)}\end{array}\right]</script></blockquote>
+<p>&emsp;&emsp;由于核函数的构造十分困难，通常我们都是从一些常用的核函数中选择，下面列出了几种常用的核函数：<br><br><center>
+<img style="border-radius: 0.3125em;box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="/../img/6-4-Common-Kernel-Functions.png"><br><div style="color:orange; border-bottom: 1px solid #d9d9d9;display: inline-block;color: #000;padding: 2px;">图6-4 常用核函数</div></center></p>
+<h3 id="软间隔支持向量机"><a href="#软间隔支持向量机" class="headerlink" title="软间隔支持向量机"></a>软间隔支持向量机</h3><p>&emsp;&emsp;前面的讨论中，我们主要解决了两个问题：当数据线性可分时，直接使用最大间隔的超平面划分；当数据线性不可分时，则通过核函数将数据映射到高维特征空间，使之线性可分。然而在现实问题中，对于某些情形还是很难处理，例如数据中有<strong>噪声</strong>的情形，噪声数据（<strong>outlier</strong>）本身就偏离了正常位置，但是在前面的SVM模型中，我们要求所有的样本数据都必须满足约束，如果不要这些噪声数据还好，当加入这些outlier后导致划分超平面被挤歪了，如下图所示，对支持向量机的泛化性能造成很大的影响。<br><br><center>
+<img style="border-radius: 0.3125em;box-shadow: 0 2px 4px 0 rgba(34,36,38,.12),0 2px 10px 0 rgba(34,36,38,.08);" src="/../img/6-5-Noise-Data.png"><br><div style="color:orange; border-bottom: 1px solid #d9d9d9;display: inline-block;color: #000;padding: 2px;">图6-5 噪声数据</div></center></p>
+<p>&emsp;&emsp;为了解决这一问题，我们需要允许某一些数据点不满足约束，即可以在一定程度上偏移超平面，同时使得不满足约束的数据点尽可能少，这便引出了<strong>“软间隔”支持向量机</strong> 的概念</p>
+<ul>
+<li>允许某些数据点不满足约束$y(w^T x+b) \geqslant 1$；</li>
+<li>同时又使得不满足约束的样本尽可能少。</li>
+</ul>
+<p>这样优化目标变为：</p>
+<script type="math/tex; mode=display">\begin{array}{l}
+\displaystyle \min_{w, b} & \displaystyle \frac{1}{2}\|w\|^2+C \sum_{i=1}^m \ell_{0/1} \left( y_i(w^T x_i+b) -1 \right) \\ 
+& {\ell_{0/1}(z)=\left\{\begin{array}{ll}
+{1,} & {\text { if } z<0 ;} \\ 
+{0,} & {\text { otherwise }} \end{array}\right.}
+\end{array}$$&emsp;&emsp;如同阶跃函数，0/1损失函数虽然表示效果最好，但是数学性质不佳。因此常用其它函数作为“替代损失函数”。
+> hinge损失：$\ell_{hinge}(z)=\max(0,1-z)$；  
+指数损失（exponential loss）: $\ell_{exp}(z)=\exp (-z)$；  
+对率损失（logistic loss）：$\ell_{log}(z)=log(1+\exp(-z))$。
 
-        <div class="article-info info-on-right">
-          
+&emsp;&emsp;支持向量机中的损失函数为**hinge损失**，引入**“松弛变量”**，目标函数与约束条件可以写为：
+$$\begin{aligned} \min & \frac{1}{2}\|w\|^2 + C \sum_{i=1}^n \xi_i \\ 
+& y_i (w^T x_i+b) \geqslant 1-\xi_i, \quad i=1, \ldots, n \\
+& \xi_i \geqslant 0, \quad i=1, \ldots, n \end{aligned}</script><p>&emsp;&emsp;其中$C$为一个参数，控制着目标函数与新引入正则项之间的权重，这样显然每个样本数据都有一个对应的松弛变量，用以表示该样本不满足约束的程度，将新的目标函数转化为拉格朗日函数得到：$$<br>L(w, b, \xi, \alpha, r)=\frac{1}{2}|w|^2+C \sum<em>{i=1}^n \xi_i-\sum</em>{i=1}^n \alpha<em>i\left(y_i (w^T x_i+b)-1+\xi_i\right)-\sum</em>{i=1}^n r_i \xi_i</p>
+<script type="math/tex; mode=display">&emsp;&emsp;按照与之前相同的方法，先让$L$求关于$w$，$b$以及松弛变量的极小，再使用SMO求出$\alpha$，有：$$\begin{aligned} 
+\frac{\partial L}{\partial w} &=0 \Rightarrow w=\sum_{i=1}^n \alpha_i y_i x_i \\ 
+\frac{\partial L}{\partial b} &=0 \Rightarrow \sum_{i=1}^n \alpha_i y_i=0 \\ 
+\frac{\partial L}{\partial \xi_i} &=0 \Rightarrow C-\alpha_i-r_i=0, \quad i=1, \ldots, n \end{aligned}$$将$w$代入$L$化简，便得到其对偶问题：
+$$\begin{array}{cl}
+{\displaystyle \max_{\alpha}} & {\displaystyle \sum_{i=1}^n \alpha_i-\frac{1}{2} \sum_{i, j=1}^n \alpha_i \alpha_j y_i y_j x_i^T x_j} \\ 
+{\text {s.t.}} & {0 \leqslant \alpha_i \leqslant C, i=1, \ldots, n} \\
+{} & {\displaystyle \sum_{i=1}^n \alpha_i y_i=0} \end{array}</script><p>&emsp;&emsp;将“软间隔”下产生的对偶问题与原对偶问题对比可以发现：新的对偶问题只是约束条件中的$\alpha$多出了一个上限$C$，其它的完全相同，因此在引入核函数处理线性不可分问题时，便能使用与“硬间隔”支持向量机完全相同的方法。<br>——在此SVM就介绍完毕。</p>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -197,133 +313,120 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?s1ze=150x150&data=http://https://star-gazers.github.io021/07/29/06-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/07/25/chapter5/" class="archive-article-date">
-  	<time datetime="2021-07-25T11:08:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-25</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/07/25/chapter5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">嗑西瓜书——神经网络篇</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/07/25/chapter5/">嗑西瓜书——神经网络篇</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-6-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA"><span class="toc-number">1.</span> <span class="toc-text">Chapter 6 支持向量机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%97%B4%E9%9A%94%E4%B8%8E%E5%87%A0%E4%BD%95%E9%97%B4%E9%9A%94"><span class="toc-number">1.0.1.</span> <span class="toc-text">函数间隔与几何间隔</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E9%97%B4%E9%9A%94"><span class="toc-number">1.0.1.1.</span> <span class="toc-text">函数间隔</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%87%A0%E4%BD%95%E9%97%B4%E9%9A%94"><span class="toc-number">1.0.1.2.</span> <span class="toc-text">几何间隔</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%A4%A7%E9%97%B4%E9%9A%94%E4%B8%8E%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F"><span class="toc-number">1.0.2.</span> <span class="toc-text">最大间隔与支持向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E5%8E%9F%E5%A7%8B%E4%BC%98%E5%8C%96%E9%97%AE%E9%A2%98%E5%88%B0%E5%AF%B9%E5%81%B6%E9%97%AE%E9%A2%98"><span class="toc-number">1.0.3.</span> <span class="toc-text">从原始优化问题到对偶问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%B8%E5%87%BD%E6%95%B0"><span class="toc-number">1.0.4.</span> <span class="toc-text">核函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BD%AF%E9%97%B4%E9%9A%94%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA"><span class="toc-number">1.0.5.</span> <span class="toc-text">软间隔支持向量机</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/07/23/chapter4/" class="archive-article-date">
-  	<time datetime="2021-07-22T17:07:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-23</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/07/23/chapter4/">嗑西瓜书——决策树篇</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/07/19/chapter3/" class="archive-article-date">
-  	<time datetime="2021-07-19T15:49:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-19</time>
-</a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/07/19/chapter3/">嗑西瓜书——线性回归篇</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
 
 
           </div>
@@ -346,9 +449,9 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
+		isPost: true,
 		isArchive: false,
-		isTag: true,
+		isTag: false,
 		isCategory: false,
 		open_in_new: false,
 		toc_hide_index: true,
