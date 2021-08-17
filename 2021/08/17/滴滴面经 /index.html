@@ -6,20 +6,27 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>嗑西瓜书——神经网络篇 | Hexo</title>
+  <title>滴滴面经 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="Chapter 5 神经网络">
+  <meta name="description" content="滴滴算法工程师一面">
 <meta property="og:type" content="article">
-<meta property="og:title" content="嗑西瓜书——神经网络篇">
-<meta property="og:url" content="http://example.com/2021/07/25/chapter5/index.html">
+<meta property="og:title" content="滴滴面经">
+<meta property="og:url" content="http://example.com/2021/08/17/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%20/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Chapter 5 神经网络">
+<meta property="og:description" content="滴滴算法工程师一面">
 <meta property="og:locale" content="en_US">
-<meta property="article:published_time" content="2021-07-25T11:08:47.000Z">
-<meta property="article:modified_time" content="2021-07-25T11:08:36.506Z">
+<meta property="og:image" content="http://example.com/img/%E5%87%86%E7%A1%AE%E7%8E%87.png">
+<meta property="og:image" content="http://example.com/img/SMOTE.jpg">
+<meta property="og:image" content="http://example.com/img/%E5%8A%A0%E6%9D%83.png">
+<meta property="og:image" content="http://example.com/img/l1l2.png">
+<meta property="og:image" content="http://example.com/img/stacking.jpg">
+<meta property="og:image" content="http://example.com/img/stackingCode.png">
+<meta property="article:published_time" content="2021-08-17T07:24:47.000Z">
+<meta property="article:modified_time" content="2021-08-17T07:23:53.967Z">
 <meta property="article:author" content="John Doe">
-<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="实习面试">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E5%87%86%E7%A1%AE%E7%8E%87.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -163,65 +170,249 @@
           <div id="js-content" class="content-ll">
             
 }
-<article id="post-chapter5" class="article article-type-post " itemscope itemprop="blogPost">
+<article id="post-滴滴面经 " class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
     <h1 class="article-title" itemprop="name">
-      嗑西瓜书——神经网络篇
+      滴滴面经
     </h1>
   
 
         
-        <a href="/2021/07/25/chapter5/" class="archive-article-date">
-  	<time datetime="2021-07-25T11:08:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-25</time>
+        <a href="/2021/08/17/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%20/" class="archive-article-date">
+  	<time datetime="2021-08-17T07:24:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-17</time>
 </a>
         
       </header>
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="Chapter-5-神经网络"><a href="#Chapter-5-神经网络" class="headerlink" title="Chapter 5 神经网络"></a>Chapter 5 神经网络</h1><span id="more"></span>
-<h2 id="神经元模型"><a href="#神经元模型" class="headerlink" title="神经元模型"></a>神经元模型</h2><p>与生物中神经元兴奋类似，“M-P神经元模型”接到来自其他 n 个神经传过来的信号， 经过带权重的连接进行传递，总输入值将于阈值进行比较，而后通过激活函数。</p>
-<script type="math/tex; mode=display">y = f( \sum_ {i = 1}^{n} w_i x_i - \theta)</script><p>常用的激活函数：</p>
-<ol>
-<li>阶跃函数：$ f(x)  = 1 \ if \  x &gt;= 0 \ else\  0 $</li>
-<li>Sigmoid： $ f(x) = \frac{1}{1 + e^{-x}} $</li>
-<li>ReLU $f(x) = max(0, x)$</li>
-<li>tanh $f(x) = tanh(x)$</li>
-</ol>
-<h2 id="感知机与多层网络"><a href="#感知机与多层网络" class="headerlink" title="感知机与多层网络"></a>感知机与多层网络</h2><p>感知机由两层神经元组成（无隐藏层），输入层接收信号传递给输出层（是一个 M-P 神经元）</p>
-<p>感知机能能学习<strong>与 、 或、非</strong>（线性可分），但是不能模拟<strong>异或</strong>（非线性可分）</p>
-<p>学习方式：</p>
-<script type="math/tex; mode=display">w_i = w_i + \Delta w_i, \Delta w_i = \alpha (y - \hat y) x_i</script><p>其中 $\alpha$ 是学习率 </p>
-<p>通过增加隐藏层，我们可以解决非线性可分问题。神经网络的学习，实质上是学习到了<strong>权值和阈值</strong>。</p>
-<h2 id="误差反向传播-Back-Propagation"><a href="#误差反向传播-Back-Propagation" class="headerlink" title="误差反向传播 Back Propagation"></a>误差反向传播 Back Propagation</h2><p>推导实例略，核心思路：</p>
-<ol>
-<li>根据误差函数，借助链式法则，逐层求偏导数</li>
-<li>Sigmoid 的导数 $f’(x) = f(x) ( 1- f(x))$</li>
-</ol>
-<p>累积 BP 和标准 BP：</p>
-<p>标准 BP 每次更新只针对一个样例，在训练初期可能会更新频繁并且存在大量抵消；累积 BP 读取整个训练集之后才更新，开始下降迅速，但后期训练缓慢。</p>
-<p>BP 神经网络易遭受过拟合，解决策略：</p>
-<ol>
-<li>Early Stopping</li>
-<li>Regularization，可以在误差函数中增加权重的正则项</li>
-</ol>
-<h2 id="Local-Optima-and-Global-Optima"><a href="#Local-Optima-and-Global-Optima" class="headerlink" title="Local Optima and Global Optima"></a>Local Optima and Global Optima</h2><p>参数空间内梯度为零的点，就是局部极小点；而一个函数可能有个局部最小，全局最小一定是局部最小，但反之不然。如何跳出局部最小：</p>
+        <h1 id="滴滴算法工程师一面"><a href="#滴滴算法工程师一面" class="headerlink" title="滴滴算法工程师一面"></a>滴滴算法工程师一面</h1><span id="more"></span>
+<h3 id="滴滴-一面-2021-8-2-面试时长：1个小时-通过"><a href="#滴滴-一面-2021-8-2-面试时长：1个小时-通过" class="headerlink" title="滴滴 一面 2021.8.2 面试时长：1个小时 通过"></a>滴滴 一面 2021.8.2 面试时长：1个小时 通过</h3><p>1.自我介绍 </p>
+<p>2.深挖项目经历，谈谈对u-net的了解 </p>
+<p>3.聚类的方法以及特征如何构建的</p>
+<p>聚类方法：原型聚类（k均值算法）、学习向量量化、高斯混合聚类、密度聚类、层次聚类</p>
 <ul>
-<li>采取不同初始化，选取最优局部最小</li>
-<li>模拟退火</li>
-<li>使用 SGD，引入随机因素</li>
-</ul>
-<h2 id="Deep-Learning"><a href="#Deep-Learning" class="headerlink" title="Deep Learning"></a>Deep Learning</h2><p>深度学习：很深层的神经网络，训练开销大，可以考虑：</p>
-<ol>
-<li>无监督逐层训练，最后 BP 整个网络</li>
-<li>权值共享：CNN、RNN</li>
+<li>kmeans聚类<ol>
+<li>随机初始化k个簇的中心坐标</li>
+<li>计算数据集内所有点到k个簇中心的距离，并将数据划分到最近的簇中</li>
+<li>更新簇中心坐标为当前簇内节点的坐标平均值</li>
+<li>重复2、3步直到簇中心坐标不再改变（此时收敛）</li>
 </ol>
-<p>深度学习的理解：对输入信号逐层加工，将其转化成与输出目标更加密切的表示。<strong>低层特征向高层特征表示的转化</strong>，再使用简单的 model 来完成复杂的任务。</p>
-
+</li>
+<li>层次聚类<ol>
+<li>凝聚的层次聚类:一种自底向上的策略，最初将每一个对象作为一个簇，然后这些簇根据某些准则被一步步的合并，而两个簇间的距离是由两个不同簇中距离最近的数据点的相似度来确定的。聚类的合并过程反复进行直到所有的对象最终满足簇的数目。</li>
+<li>分裂的层次聚类：一种自上向下的策略，首先将所有的样本划分到一个簇中，然后根据某些准则将簇分开，直到达到所需的簇的数目或者达到了阈值。</li>
+<li>簇内不相似度：计算样本i到同簇其他样本的平均距离d，d越小，说明i越应该被分到该类中，那么d称为i的簇内不相似度。</li>
+</ol>
+</li>
+<li>密度聚类<ol>
+<li>指导思想：只要样本点中的密度大于某个阈值，则将该样本添加到最近的簇中。这种聚类算法克服了在使用k-means等等基于距离的算法时，只能发现“类圆形”的聚类的缺点，它可以发现任意形状的聚类，并且对噪声数据不敏感。</li>
+<li>基本概念：<ol>
+<li>样本的 $ε$-邻域：以给定样本点为中心，以$ε$为半径的圆形区域。</li>
+<li>核心对象：如果一个对象的$ε$-邻域的密度超过某个临界值，即对象的$ε$-邻域内包含的样本点数量超过某个数值m，则称该对象为核心对象。</li>
+<li>直接密度可达：给定一个对象集合D，如果样本p是在样本q的$ε$-邻域内，而样本q是一个核心对象，则称对象p是从对象q出发直接密度可达的。</li>
+<li>密度相连：对于给定的半径$ε$和阈值m，如果存在三个对象p、q和r，满足p和q都是从O关于$ε$和m密度可达的，那么对象p和q是关于$ε$和m密度相连的。</li>
+</ol>
+</li>
+<li>算法的流程：<ol>
+<li>通过计算每个样本点在ε-邻域内的密度，找出所有的核心对象，并把核心对象所在的ε-邻域标记为一个簇。</li>
+<li>合并所有的核心对象可以密度相连的簇。</li>
+<li>没有新点可以更新簇时，算法结束。</li>
+</ol>
+</li>
+</ol>
+</li>
+</ul>
+<p>4.贷款预测的项目介绍，几分类问题</p>
+<p>5.xgb的训练过程，相比于gbdt的改进 </p>
+<ol>
+<li>在训练之前会根据特征对数据进行排序，然后保存到块结构中，并在每个块结构中都采用了稀疏矩阵存储格式进行存储，后面的训练过程中会重复地使用块结构。</li>
+<li>首先同时训练两颗树<ul>
+<li>第一棵树针对样本 x 的第一类，输入为$(x,0)$。</li>
+<li>第二棵树输入针对样本 x 的第二类，假设 x 属于第二类，输入为$（x, 1）$。</li>
+<li>当树的深度为0时开始。每个叶节点枚举所有的可用特征，多线程近似计算block中特征的分裂收益并记录。选择收益最大的特征作为分裂特征，用该特征的最佳分裂点作为分裂位置，在该节点上分裂出左右两个新的叶节点，并为每个新节点关联对应的样本集。</li>
+<li>输出两棵树对 x 类别的预测值 $f1(x)$, $f2(x)$。</li>
+</ul>
+</li>
+<li>计算每棵树的一阶、二阶导数，以及树的复杂度<ul>
+<li>针对类别 1 求出目标函数 $f11(x) = 0 − f1(x)$；</li>
+<li>类别 2 求出残差 $f22(x) = 1 − f2(x)$。</li>
+</ul>
+</li>
+<li>然后第二轮训练<ul>
+<li>第一类输入为$(x, f11(x))$；</li>
+<li>第二类输入为$(x, f22(x))$。</li>
+</ul>
+</li>
+<li>继续训练出两棵树，一直迭代 M 轮，每轮构建两棵树。</li>
+</ol>
+<p>6.xgb如何处理缺失值的，详细过程、划分标准</p>
+<ul>
+<li>在实际工程中一般会出现输入值稀疏的情况。比如数据缺失、one-hot编码造成输入数据稀疏。XGBoost在构建树的节点过程中只考虑非缺失值的数据遍历，而为每个节点增加了一个缺省方向，当样本相应的特征值缺失时，可以被归类到缺省方向上，最优的缺省方向可以从数据中学到。至于如何学到缺省值的分支，其实很简单，分别枚举特征缺省的样本归为左右分支后的增益，选择增益最大的枚举项即为最优缺省方向。</li>
+<li>在构建树的过程中需要枚举特征缺失的样本，乍一看这个算法会多出相当于一倍的计算量，但其实并不是。因为在算法的迭代中只考虑了非缺失值数据的遍历，而缺失值数据则直接被分配到左右节点，所需要遍历的样本量大大减少。</li>
+</ul>
+<p>7.GBDT与rf的区别 </p>
+<p>我的回答：</p>
+<ul>
+<li><strong>集成学习</strong>：$RF$属于$Bagging$思想，而$GBDT$是$Boosting$思想</li>
+<li><strong>偏差-方差权衡</strong>：$RF$不断的降低模型的方差，而$GBDT$不断的降低模型的偏差。对于$Xgboost$能够利用$L2$不断降低模型的方差。</li>
+<li><strong>训练样本</strong>：$RF$每次迭代的样本是从全部训练集中有放回抽样形成的，而GBDT每次使用全部样本</li>
+<li><strong>并行性</strong>：$RF$的树是可以并行生成的，而$GBDT$只能顺序生成（需要等上一棵树完全生成）</li>
+<li><strong>最终结果</strong>：$RF$最终是多棵树并行生成，而$GBDT$只能顺序生成（需要等上一棵树完全生成）</li>
+<li><strong>数据敏感性</strong>：$RF$对异常值不敏感，而$GBDT$对异常值比较敏感</li>
+<li><strong>泛化能力</strong>：$RF$不易过拟合，而$GBDT$容易过拟合</li>
+</ul>
+<p>8.分类使用的是什么评价指标，准确率和召回率是什么？</p>
+<p><strong>准确率和错误率</strong></p>
+<script type="math/tex; mode=display">Acc(y,\hat{y})=\frac{1}{n}\sum_{i=1}^{n}y_i=\hat{y_i} \tag{1}</script><script type="math/tex; mode=display">Error(y, \hat{y})=1-acc(y,\hat{y}) \tag{2}</script><p>Acc与Error平等对待每个类别，即每一个样本判对 (0) 和判错 (1) 的代价都是一样的。使用Acc与Error作为衡量指标时，需要考虑样本不均衡问题以及实际业务中好样本与坏样本的重要程度。</p>
+<p><strong>混淆矩阵</strong></p>
+<p>对于二分类问题,可将样例根据其真是类别与学习器预测类别的组合划分为：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">真正例(true positive, TP):预测为 1，预测正确，即实际 1</span><br><span class="line">假正例(false positive, FP):预测为 1，预测错误，即实际 0</span><br><span class="line">真反例(ture negative, TN):预测为 0，预测正确，即实际 0</span><br><span class="line">假反例(false negative, FN):预测为 0，预测错误，即实际 1</span><br></pre></td></tr></table></figure>
+<p>则有:$TP+FP+TN+FN=样例总数$。分类结果的混淆矩阵(confusion matrix)如下:</p>
+<p><a target="_blank" rel="noopener" href="https://www.notion.so/4479bfa42a3d43039cba09bcb0b5c818">混淆矩阵</a></p>
+<p><strong>准确率（查准率）</strong></p>
+<p>Precision 是分类器预测的正样本中预测正确的比例，取值范围为[0,1]，取值越大，模型预测能力越好。</p>
+<script type="math/tex; mode=display">P=\frac{TP}{TP+FP} \tag{3}</script><p><strong>召回率（查全率）Recall</strong></p>
+<p>Recall是分类器所预测正确的正样本占所有正样本的比例，取值范围为[0,1]，取值越大，模型预测能力越好。</p>
+<p><img src="/../img/%E5%87%86%E7%A1%AE%E7%8E%87.png" alt="准确率.png"></p>
+<p>9.AUC是什么？</p>
+<p>对于二分类问题，预测模型会对每一个样本预测一个得分s或者一个概率p。然而，可以选取一个阈值t，让得分s&gt;t的样本预测为正，而得分s&lt;t的样本预测为负。这样一来，根据预测的结果和实际的标签可以把样本分为4类，则有混淆矩阵：</p>
+<p><a target="_blank" rel="noopener" href="https://www.notion.so/a33d22e745984758b41571f41ae19d29">混淆矩阵</a></p>
+<p>随着阈值t选取的不同，这四类样本的比例各不相同。定义真正例率TPR和假正例率FPR为：</p>
+<script type="math/tex; mode=display">\begin{array}{l}
+\mathrm{TPR}=\frac{\mathrm{TP}}{\mathrm{TP}+\mathrm{FN}}
+\end{array} \tag{4}</script><script type="math/tex; mode=display">\begin{array}{l}
+\mathrm{FPR}=\frac{\mathrm{FP}}{\mathrm{FP}+\mathrm{TN}}
+\end{array} \tag{5}</script><p>随着阈值t的变化，TPR和FPR在坐标图上形成一条曲线，这条曲线就是ROC曲线。显然，如果模型是随机的，模型得分对正负样本没有区分性，那么得分大于t的样本中，正负样本比例和总体的正负样本比例应该基本一致。</p>
+<p>实际的模型的ROC曲线则是一条上凸的曲线，介于随机和理想的ROC曲线之间。而ROC曲线下的面积，即为AUC！</p>
+<p>其中x和y分别对应TPR和FPR，也是ROC曲线的横纵坐标。</p>
+<script type="math/tex; mode=display">\mathrm{AUC}=\int_{t=\infty}^{-\infty} y(t) d x(t) \tag{6}</script><p>10.xgb如何并行计算的 </p>
+<ul>
+<li><strong>不是说每棵树可以并行训练，</strong>$XGBoost$本质上仍然采用$Boosting$思想，每棵树训练前需要等前面的树训练完成才能够开始训练。</li>
+<li><strong>准确说是特征维度的并行：</strong>在训练之前，每个特征按特征值对样本进行预排序，并存储为block结构，在后面查找特征分割点时可以重复使用，而且特征已经被存储为一个个block结构，那么在寻找每个特征的最佳分割点时，可以利用多线程对每个block并行计算。</li>
+</ul>
+<p>11.回归问题的用的什么评价指标，数据不平衡怎么处理，xgb有什么参数可以处理呢？</p>
+<h2 id="一、评价指标"><a href="#一、评价指标" class="headerlink" title="一、评价指标"></a>一、评价指标</h2><h3 id="平均绝对误差（MAE）"><a href="#平均绝对误差（MAE）" class="headerlink" title="平均绝对误差（MAE）"></a><strong>平均绝对误差（MAE）</strong></h3><p>平均绝对误差（MAE）又被称为L1范数损失。</p>
+<script type="math/tex; mode=display">MAE=\frac{1}{n}\sum_{i=1}^{n}|y_i-\hat{y}_i| \tag{7}</script><p>MAE虽然能够较好的衡量回归模型的好坏，但是绝对值的存在导致函数不光滑，在某些点上不能求导，可以考虑将绝对值改成残差的平方，这就是均方误差。</p>
+<h3 id="均方误差（MSE）"><a href="#均方误差（MSE）" class="headerlink" title="均方误差（MSE）"></a><strong>均方误差（MSE）</strong></h3><p>均方误差MSE又被称为L2范数损失。</p>
+<script type="math/tex; mode=display">MSE=\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2 \tag{8}</script><p>由于MSE与我们的目标变量的量纲不一致，为了保证量纲一致性，我们需要对MSE进行开方 。</p>
+<h2 id="二、数据不平衡"><a href="#二、数据不平衡" class="headerlink" title="二、数据不平衡"></a>二、数据不平衡</h2><h3 id="1-采样"><a href="#1-采样" class="headerlink" title="1.采样"></a><strong>1.采样</strong></h3><p>采样方法是通过对训练集进行处理使其从不平衡的数据集变成平衡的数据集，在大部分情况下会对最终的结果带来提升。</p>
+<p>采样分为<strong>上采样（Oversampling）</strong>和<strong>下采样（Undersampling）</strong>，上采样是把小众类复制多份，下采样是从大众类中剔除一些样本，或者说只从大众类中选取部分样本。</p>
+<p>上采样后的数据集中会反复出现一些样本，训练出来的模型会有一定的过拟合；而下采样的缺点显而易见，那就是最终的训练集丢失了数据，模型只学到了总体模式的一部分，容易欠拟合。</p>
+<p>上采样会把小众样本复制多份，一个点会在高维空间中反复出现，这会导致一个问题，那就是运气好就能分对很多点，否则分错很多点。为了解决这一问题，可以在每次生成新数据点时加入轻微的随机扰动，经验表明这种做法非常有效。</p>
+<p>因为下采样会丢失信息，如何减少信息的损失呢？</p>
+<ul>
+<li>第一种方法叫做EasyEnsemble，利用模型融合的方法（Ensemble）：多次下采样（放回采样，这样产生的训练集才相互独立）产生多个不同的训练集，进而训练多个不同的分类器，通过组合多个分类器的结果得到最终的结果。</li>
+<li>第二种方法叫做BalanceCascade，利用增量训练的思想（Boosting）：先通过一次下采样产生训练集，训练一个分类器，对于那些分类正确的大众样本不放回，然后对这个更小的大众样本下采样产生训练集，训练第二个分类器，以此类推，最终组合所有分类器的结果得到最终结果。</li>
+<li>第三种方法是利用KNN试图挑选那些最具代表性的大众样本，叫做NearMiss，这类方法计算量很大。</li>
+</ul>
+<h3 id="2-数据合成"><a href="#2-数据合成" class="headerlink" title="2.数据合成"></a><strong>2.数据合成</strong></h3><p>数据合成方法是利用已有样本生成更多样本，这类方法在小数据场景下有很多成功案例，比如医学图像分析等。</p>
+<p><img src="/../img/SMOTE.jpg" alt="SMOTE.jpg"></p>
+<p>$SMOTE$为每个小众样本合成相同数量的新样本，这带来一些潜在的问题：一方面是增加了类之间重叠的可能性，另一方面是生成一些没有提供有益信息的样本。为了解决这个问题，出现两种方法：$Borderline-SMOTE$与$ADASYN$。</p>
+<p>$Borderline-SMOTE$的解决思路是寻找那些应该为之合成新样本的小众样本。即为每个小众样本计算K近邻，只为那些K近邻中有一半以上大众样本的小众样本生成新样本。直观地讲，只为那些周围大部分是大众样本的小众样本生成新样本，因为这些样本往往是边界样本。确定了为哪些小众样本生成新样本后再利用$SMOTE$生成新样本。<br><strong>3.加权</strong></p>
+<p>除了采样和生成新数据等方法，我们还可以通过加权的方式来解决数据不平衡问题，即对不同类别分错的代价不同，如下图：</p>
+<p><img src="/../img/%E5%8A%A0%E6%9D%83.png" alt="加权.png"></p>
+<p>横向是真实分类情况，纵向是预测分类情况，$C(i,j)$是把真实类别为j的样本预测为i时的损失，我们需要根据实际情况来设定它的值。</p>
+<p>这种方法的难点在于设置合理的权重，实际应用中一般让各个分类间的加权损失值近似相等。当然这并不是通用法则，还是需要具体问题具体分析。</p>
+<h3 id="4-一分类"><a href="#4-一分类" class="headerlink" title="4.一分类"></a><strong>4.一分类</strong></h3><p>对于正负样本极不平衡的场景，我们可以换一个完全不同的角度来看待问题：把它看做一分类（One Class Learning）或异常检测（Novelty Detection）问题。这类方法的重点不在于捕捉类间的差别，而是为其中一类进行建模，经典的工作包括One-class SVM等。</p>
+<p><strong>说明：对于正负样本极不均匀的问题，使用异常检测，或者一分类问题，也是一个思路。</strong></p>
+<h3 id="5-如何选择"><a href="#5-如何选择" class="headerlink" title="5.如何选择"></a>5.如何选择</h3><ol>
+<li>在正负样本都非常之少的情况下，应该采用数据合成的方式；</li>
+<li>在负样本足够多，正样本非常之少且比例及其悬殊的情况下，应该考虑一分类方法；</li>
+<li>在正负样本都足够多且比例不是特别悬殊的情况下，应该考虑采样或者加权的方法。</li>
+<li>采样和加权在数学上是等价的，但实际应用中效果却有差别。尤其是采样了诸如Random Forest等分类方法，训练过程会对训练集进行随机采样。在这种情况下，如果计算资源允许上采样往往要比加权好一些。</li>
+<li>另外，虽然上采样和下采样都可以使数据集变得平衡，并且在数据足够多的情况下等价，但两者也是有区别的。实际应用中，我的经验是如果计算资源足够且小众类样本足够多的情况下使用上采样，否则使用下采样，因为上采样会增加训练集的大小进而增加训练时间，同时小的训练集非常容易产生过拟合。</li>
+<li>对于下采样，如果计算资源相对较多且有良好的并行环境，应该选择Ensemble方法。</li>
+</ol>
+<h2 id="三、-XGBoost-如何处理不平衡数据"><a href="#三、-XGBoost-如何处理不平衡数据" class="headerlink" title="三、$XGBoost$如何处理不平衡数据"></a>三、$XGBoost$如何处理不平衡数据</h2><ul>
+<li>设置<em>scale_pos_weight</em>来平衡正样本和负样本的权重。例如，当正负样本比例为1:10时，<em>scale_pos_weight</em>可以取10；</li>
+<li>你不能重新平衡数据集(会破坏数据的真实分布)的情况下，应该设置<em>max_delta_step</em>为一个有限数字来帮助收敛（基模型为LR时有效）。</li>
+</ul>
+<p>12.l1和l2正则化有什么区别 </p>
+<p><strong>线性回归的损失函数：</strong></p>
+<script type="math/tex; mode=display">J(\theta)=\frac{1}{2 m} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}\tag{9}</script><ul>
+<li><p><strong>岭回归</strong></p>
+<ul>
+<li><p>损失函数：</p>
+<script type="math/tex; mode=display">J(\theta)=\frac{1}{2 m} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}+\lambda \sum_{j=1}^{n} \theta_{j}^{2} \tag{10}</script></li>
+</ul>
+</li>
+<li><p><strong>Lasso回归</strong></p>
+<ul>
+<li><p>损失函数：</p>
+<script type="math/tex; mode=display">J(\theta)=\frac{1}{2 m} \sum_{i=1}^{m}\left(h_{\theta}\left(x^{(i)}\right)-y^{(i)}\right)^{2}+\lambda \sum_{j=1}^{n} |\theta_{j}|\tag{11}</script><p>本来Lasso回归与岭回归的解空间是全部区域，但通过正则化添加了一些约束，使得解空间变小了，甚至在个别正则化方式下，解变得稀疏了。</p>
+<p><img src="/../img/l1l2.png" alt="l1l2.png"></p>
+<p>如图所示，这里的w1，w2都是模型的参数，要优化的目标参数，那个红色边框包含的区域，其实就是解空间，正如上面所说，这个时候，解空间“缩小了”，你只能在这个缩小了的空间中，寻找使得目标函数最小的w1，w2。左边图的解空间是圆的，是由于采用了L2范数正则化项的缘故，右边的是个四边形，是由于采用了L1范数作为正则化项的缘故，大家可以在纸上画画，L2构成的区域一定是个圆，L1构成的区域一定是个四边形。</p>
+<p>再看看那蓝色的圆圈，再次提醒大家，这个坐标轴和特征（数据）没关系，它完全是参数的坐标系，每一个圆圈上，可以取无数个$w1$，$w2$，这些$w1$，$w2$有个共同的特点，用它们计算的目标函数值是相等的！那个蓝色的圆心，就是实际最优参数，但是由于我们对解空间做了限制，所以最优解只能在“缩小的”解空间中产生。</p>
+<p>蓝色的圈圈一圈又一圈，代表着参数$w1$，$w2$在不停的变化，并且是在解空间中进行变化（这点注意，图上面没有画出来，估计画出来就不好看了），直到脱离了解空间，也就得到了图上面的那个$w^*$，这便是目标函数的最优参数。</p>
+<p>对比一下左右两幅图的$w^<em>$，我们明显可以发现，右图的$w^</em>$的$w1$分量是0，稀疏解诞生了！是的，这就是我们想要的稀疏解，我们想要的简单模型。L1比L2正则化更容易产生稀疏矩阵。</p>
+</li>
+</ul>
+</li>
+</ul>
+<p>13.特征工程中构造了哪些特征，如何构造的 </p>
+<p>14.贝叶斯调参的理解，调整了哪些参数 </p>
+<p><strong>日常调参过程中用到的参数和调参顺序：</strong></p>
+<ol>
+<li>max_depth、num_leaves</li>
+<li>min_data_in_leaf、min_child_weight</li>
+<li>bagging_fraction、 feature_fraction、bagging_freq</li>
+<li>reg_lambda、reg_alpha</li>
+<li>min_split_gain</li>
+</ol>
+<p><strong>贝叶斯调参：</strong></p>
+<ul>
+<li>主要思想：给定优化的目标函数(广义的函数，只需指定输入和输出即可，无需知道内部结构以及 数学性质)，通过不断地添加样本点来更新目标函数的后验分布(高斯过程,直到后验分布基本贴合于真实分布）。简单的说，就是考虑了上一次参数的信息，从而更好的调整当前的参数。</li>
+<li>调参的顺序：<ol>
+<li>定义优化函数(rf_cv）</li>
+<li>建立模型</li>
+<li>定义待优化的参数</li>
+<li>得到优化结果，并返回要优化的分数指标</li>
+</ol>
+</li>
+</ul>
+<p>15.stacking融合是什么 </p>
+<ul>
+<li>Stacking<ul>
+<li>多次采样，训练多个分类器，将输出作为最后的输入特征</li>
+</ul>
+</li>
+<li>将训练好的所有基模型对训练集进行预测，第个i基模型对第i个训练样本的预测值将作为新的训练集中第i个样本的第i个特征值，最后基于新的训练集进行训练。同理，预测的过程也要先经过所有基模型的预测形成新的测试集，最后再对测试集进行预测。</li>
+<li>Stacking常见的使用方式：<ul>
+<li>由K-NN、随机森林和朴素贝叶斯基础分类器组成，它的预测结果由作为元分类器的Loqistic 回归组合。</li>
+</ul>
+</li>
+</ul>
+<p><strong>例子：</strong></p>
+<p>数据的行数：train.csv有890行，也就是890个人，test.csv有418行（418个人）。</p>
+<p>关于Stacking的示意图：</p>
+<p><img src="/../img/stacking.jpg" alt="stacking.jpg"></p>
+<p><strong>对于每一轮的 5-fold，Model 1都要做满5次的训练和预测。</strong></p>
+<p><strong>第一层：</strong></p>
+<p>Train Data有890行。(请对应图中的上层部分）</p>
+<p>每1次的fold，都会生成 712 行小train，178 行小test。我们用Model 1来训练 712 行的小train，然后预测 178 行小test。预测的结果是长度为 178 的预测值。</p>
+<p>这样的动作走5次！ 长度为178 的预测值 X 5 = 890 预测值，刚好和Train data长度吻合。这个890预测值是Model 1产生的，我们先存着，因为，一会让它将是第二层模型的训练来源。</p>
+<p>重点：<strong>这一步产生的预测值我们可以转成 890 X 1 （890 行，1列），记作 P1 (大写P)</strong></p>
+<p>接着说 Test Data 有 418 行。(请对应图中的下层部分，绿色的框框）</p>
+<p>每1次的fold，713行 小train训练出来的Model 1要去预测我们全部的Test Data（因为Test Data没有加入5-fold，所以每次都是全部！）。此时，Model 1的预测结果是长度为418的预测值。</p>
+<p>重点：<strong>这一步产生的预测值我们可以转成 418 X 1 （418行，1列），记作 p1 (小写p)</strong></p>
+<p>此时，第一层的Model 1完成了它的使命。</p>
+<p>第一层还会有其他Model的，比如Model 2，同样的走一遍， 我们有可以得到 890 X 1 (P2) 和 418 X 1 (p2) 列预测值。</p>
+<p>假设你第一层有3个模型，这样你就会得到：</p>
+<p>来自5-fold的预测值矩阵 890 X 3，（P1，P2， P3） 和 来自Test Data预测值矩阵 418 X 3， （p1, p2, p3）。</p>
+<p><strong>第二层：</strong></p>
+<p>来自5-fold的预测值矩阵 890 X 3 作为你的Train Data，训练第二层的模型</p>
+<p>来自Test Data预测值矩阵 418 X 3 就是你的Test Data，用训练好的模型来预测他们</p>
+<p><strong>stacking代码及注释：</strong></p>
+<p><img src="/../img/stackingCode.png" alt="stackingCode.png"></p>
+<p>16.了解卷积神经网络吗？卷积过程如何实现的 </p>
+<p>17.大数据处理工具会吗？spark </p>
+<p>18.手撕代码，实现一个镜像树</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">reversrTree</span>(<span class="params">root</span>):</span></span><br><span class="line">	<span class="keyword">if</span> root == <span class="literal">None</span></span><br><span class="line">		<span class="keyword">return</span></span><br><span class="line">	reverseTree(root.lchild)</span><br><span class="line">	reverseTree(root.rchild)</span><br><span class="line">	t = root.lchild</span><br><span class="line">	root.lchild = root.rchild</span><br><span class="line">	root.rchild = t</span><br></pre></td></tr></table></figure>
       
 
       
@@ -255,7 +446,7 @@
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">实习面试</a>
         		</li>
       		
 		</ul>
@@ -311,7 +502,7 @@
     <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
     <p>扫一扫，分享到微信</p>
     <div class="wx-qrcode">
-      <img src="//api.qrserver.com/v1/create-qr-code/?s1ze=150x150&data=http://https://star-gazers.github.io021/07/25/chapter5/" alt="微信分享二维码">
+      <img src="//api.qrserver.com/v1/create-qr-code/?s1ze=150x150&data=http://https://star-gazers.github.io021/08/17/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%20/" alt="微信分享二维码">
     </div>
 </div>
 
@@ -325,18 +516,9 @@
   
 <nav id="article-nav">
   
-    <a href="/2021/07/29/06-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" id="article-nav-newer" class="article-nav-link-wrap">
-      <i class="icon-circle-left"></i>
-      <div class="article-nav-title">
-        
-          嗑西瓜书——支持向量机篇
-        
-      </div>
-    </a>
   
-  
-    <a href="/2021/07/23/chapter4/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">嗑西瓜书——决策树篇</div>
+    <a href="/2021/07/29/06-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">嗑西瓜书——支持向量机篇</div>
       <i class="icon-circle-right"></i>
     </a>
   
@@ -363,7 +545,7 @@
                 </span>
                 <span class="tooltip-content">
                     <div class="toc-article">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Chapter-5-%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C"><span class="toc-number">1.</span> <span class="toc-text">Chapter 5 神经网络</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A5%9E%E7%BB%8F%E5%85%83%E6%A8%A1%E5%9E%8B"><span class="toc-number">1.1.</span> <span class="toc-text">神经元模型</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%84%9F%E7%9F%A5%E6%9C%BA%E4%B8%8E%E5%A4%9A%E5%B1%82%E7%BD%91%E7%BB%9C"><span class="toc-number">1.2.</span> <span class="toc-text">感知机与多层网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AF%E5%B7%AE%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD-Back-Propagation"><span class="toc-number">1.3.</span> <span class="toc-text">误差反向传播 Back Propagation</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Local-Optima-and-Global-Optima"><span class="toc-number">1.4.</span> <span class="toc-text">Local Optima and Global Optima</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Deep-Learning"><span class="toc-number">1.5.</span> <span class="toc-text">Deep Learning</span></a></li></ol></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BB%B4%E6%BB%B4%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E4%B8%80%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">滴滴算法工程师一面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BB%B4%E6%BB%B4-%E4%B8%80%E9%9D%A2-2021-8-2-%E9%9D%A2%E8%AF%95%E6%97%B6%E9%95%BF%EF%BC%9A1%E4%B8%AA%E5%B0%8F%E6%97%B6-%E9%80%9A%E8%BF%87"><span class="toc-number">1.0.1.</span> <span class="toc-text">滴滴 一面 2021.8.2 面试时长：1个小时 通过</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87"><span class="toc-number">1.1.</span> <span class="toc-text">一、评价指标</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B9%B3%E5%9D%87%E7%BB%9D%E5%AF%B9%E8%AF%AF%E5%B7%AE%EF%BC%88MAE%EF%BC%89"><span class="toc-number">1.1.1.</span> <span class="toc-text">平均绝对误差（MAE）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%87%E6%96%B9%E8%AF%AF%E5%B7%AE%EF%BC%88MSE%EF%BC%89"><span class="toc-number">1.1.2.</span> <span class="toc-text">均方误差（MSE）</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E6%95%B0%E6%8D%AE%E4%B8%8D%E5%B9%B3%E8%A1%A1"><span class="toc-number">1.2.</span> <span class="toc-text">二、数据不平衡</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E9%87%87%E6%A0%B7"><span class="toc-number">1.2.1.</span> <span class="toc-text">1.采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E6%95%B0%E6%8D%AE%E5%90%88%E6%88%90"><span class="toc-number">1.2.2.</span> <span class="toc-text">2.数据合成</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E4%B8%80%E5%88%86%E7%B1%BB"><span class="toc-number">1.2.3.</span> <span class="toc-text">4.一分类</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9"><span class="toc-number">1.2.4.</span> <span class="toc-text">5.如何选择</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81-XGBoost-%E5%A6%82%E4%BD%95%E5%A4%84%E7%90%86%E4%B8%8D%E5%B9%B3%E8%A1%A1%E6%95%B0%E6%8D%AE"><span class="toc-number">1.3.</span> <span class="toc-text">三、$XGBoost$如何处理不平衡数据</span></a></li></ol></li></ol>
                     </div>
                 </span>
             </div>
