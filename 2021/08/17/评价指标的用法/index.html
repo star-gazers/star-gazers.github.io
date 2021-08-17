@@ -6,15 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives | Hexo</title>
+  <title>评价指标 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/page/2/index.html">
+  <meta name="description" content="评价指标的用法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="评价指标">
+<meta property="og:url" content="http://example.com/2021/08/17/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E7%9A%84%E7%94%A8%E6%B3%95/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="评价指标的用法">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5.jpg">
+<meta property="og:image" content="http://example.com/img/recall.jpg">
+<meta property="og:image" content="http://example.com/img/ROC.jpg">
+<meta property="og:image" content="http://example.com/img/PR.jpg">
+<meta property="article:published_time" content="2021-08-17T15:05:47.000Z">
+<meta property="article:modified_time" content="2021-08-17T15:05:32.661Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -157,101 +167,225 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-  
+}
+<article id="post-评价指标的用法" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
     
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/04/03/daily_knowledge/" class="archive-article-date">
-  	<time datetime="2021-04-03T15:42:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-03</time>
-</a>
-        </div>
-    	 
+      <header class="article-header">
+        
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/04/03/daily_knowledge/">记录前端日常知识点——HTML、CSS</a>
+    <h1 class="article-title" itemprop="name">
+      评价指标
     </h1>
   
 
-        <div class="article-info info-on-right">
-          
+        
+        <a href="/2021/08/17/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E7%9A%84%E7%94%A8%E6%B3%95/" class="archive-article-date">
+  	<time datetime="2021-08-17T15:05:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-17</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="评价指标的用法"><a href="#评价指标的用法" class="headerlink" title="评价指标的用法"></a>评价指标的用法</h1><span id="more"></span>
+<h2 id="如何衡量一个机器学习模型的效果？"><a href="#如何衡量一个机器学习模型的效果？" class="headerlink" title="如何衡量一个机器学习模型的效果？"></a>如何衡量一个机器学习模型的效果？</h2><p>我相信此时大家的脑子会迅速蹦出几个关键词：准确率，召回率，ROC….</p>
+<p>这我熟啊！全部都上一遍，这些指标都高的模型胜出！或者直接看准确率不就好了吗？</p>
+<h2 id="为什么只看准确率不足以全面衡量模型？"><a href="#为什么只看准确率不足以全面衡量模型？" class="headerlink" title="为什么只看准确率不足以全面衡量模型？"></a>为什么只看准确率不足以全面衡量模型？</h2><p>我们先来看一个例子。假设我们随机从大街找一万个人，为他们免费的新冠病毒的检测，我们姑且假设这里有两位患者。</p>
+<p>这会产生两种情况：</p>
+<p>1.A检测手段，会把所有的人都检测为：没有新冠病毒。这个时候这种检测手段的准确率是 7000/10000 几乎是等于 1 。</p>
+<p>2.B检测手段，会把大部分都检测为：有新冠病毒。这个时候这种检测手段大概率能把所有真正有病毒的患者找出来。</p>
+<p>那么，上述例子里面，如果携带病毒称为阳性 positive，不携带病毒称为阴性 negative。我们可以把结果画这么一个表：</p>
+<p><img src="/../img/%E6%B7%B7%E6%B7%86%E7%9F%A9%E9%98%B5.jpg" alt="混淆矩阵.jpg"></p>
+<p>这个表就称为混淆矩阵。</p>
+<p>上面新冠病毒的例子中：</p>
+<ol>
+<li>由于所有的实际携带病毒的人都被检测为了没有携带，这个就称为 假阴性，False Negative (FN)</li>
+<li>由于大量的实际健康的人都被检测成了携带病毒的人，这个就称为 假阳性，False Positive (FP)</li>
+</ol>
+<h2 id="Recall-和-Precision"><a href="#Recall-和-Precision" class="headerlink" title="Recall 和 Precision"></a>Recall 和 Precision</h2><p>一般来说，我们 Positive 是我们的检测目标。如果 FN 太多，我们就说这种方法的 recall 很低，自然风险控制能力就很差（放走了携带病毒的人）。</p>
+<script type="math/tex; mode=display">recall=\frac{TP}{TP+FN} \tag{1}</script><p>如果 FP 太多，我们就说这种方法的 precision 很低，自然这个方法就很浪费（把大量健康人当做携带者处理，成本激增）</p>
+<script type="math/tex; mode=display">precision=\frac{TP}{TP+FP} \tag{2}</script><p><img src="/../img/recall.jpg" alt="recall.jpg"></p>
+<p>现在再回过头看 accuracy 的定义，你会发现 accuracy 相比于上面的 recall 和 precision 是一种更加全局化的衡量标准，于此同时，带来的问题是这种衡量标准比较粗糙。</p>
+<script type="math/tex; mode=display">accuracy=\frac{TP+TN}{TP+TN+FN+FP} \tag{3}</script><h2 id="F1-Score"><a href="#F1-Score" class="headerlink" title="F1 Score"></a>F1 Score</h2><p>假如我想同时控制风险 ( recall ) 和成本 ( precision )怎么办？那就用 F1 Score 。</p>
+<script type="math/tex; mode=display">F_1=\frac{2*P*R}{P+R} \tag{4}</script><h2 id="ROC-和-ROC-AUC"><a href="#ROC-和-ROC-AUC" class="headerlink" title="ROC 和 ROC_AUC"></a>ROC 和 ROC_AUC</h2><p>首先要说的是，confusion matrix 是会受到 threshold 影响的。所谓 threshold，就是假设网络当前的输出值是 0.6 （一般都是经过 sigmoid 之后的值），如果 threshold 是 0.5，那么就会被归到 1 这一类，但是如果 threshold 是 0.7，则会被归到 0 这一类。</p>
+<p>可见，通过不断的调整 threshold，就能得到不同的 confusion matrix。</p>
+<p>当然，这个 threshold 的调整，不是随便调的，设的越高，灵敏度就越低，设的越低，假阳性就越多。</p>
+<p>其中，灵敏度的定义是： the true positive rate (TP / (TP + FN)) 就是前面说的 recall。</p>
+<p>假阳性的定义是：the false positive rate (FP / (FP + TN)) 就是所有本来是阴性其中有多少被错判成了阳性，可以理解成成本。</p>
+<p>一般来说，调整 threshold，会让这两个值反向变化。（TPR 和 FPR 数值上是同向变大的，但是我们希望 TPR 越大越好而 FPR 越小越好，所以这里我们说二者是反向变化的。</p>
+<p><img src="/../img/ROC.jpg" alt="ROC.jpg"></p>
+<p>不同颜色代表不同模型。明显，黑色模型是随机模型，绿色模型是最好的，但是也是不可能实现的。剩下的，红色的比蓝色的好。</p>
+<p>也就是说，ROC （Receiver Operating Characteristic）曲线下面的面积越大，模型就越好。这个曲线下面积就称为 AUC（Area Under the Curve）。</p>
+<h2 id="Precision-Recall-curve"><a href="#Precision-Recall-curve" class="headerlink" title="Precision-Recall curve"></a>Precision-Recall curve</h2><p>同样的，改变 threshold 也会反向的改变 precision 和 recall。我们也可以画一下这两个量的关系图，这个图就叫做 precision recall curve。</p>
+<p><img src="/../img/PR.jpg" alt="PR.jpg"></p>
+<p>蓝色虚线属于随机模型，橙色曲线下面包的面积越大越好。</p>
+<p>什么时候用 ROC，什么时候用 Precision-Recall 呢？</p>
+<p><strong>样本不同：</strong></p>
+<ol>
+<li>一般来说，像上面新冠病毒的例子，用 Precision-Recall 比较好，属于 data imbalanced 的情况（但数据不平衡时，正负样本相差不大可以通过采样加权的方法解决，如果相差过大，那么评价指标的选择根据真实情况变化）。</li>
+<li>如果 positive，negative 的数量基本是平衡的，那 ROC 就更常用一些。</li>
+</ol>
+<p><strong>目的不同：</strong></p>
+<ol>
+<li><strong>模型调优方向问题：</strong>先看样本角度，ROC曲线，不同种类样本的recall precision，是否需要平衡，加权，删减等再看特征角度，各个模型的特征权重，比如coef.  gini 等，是否需要删除，添加，优化，组合，归一化，异常处理做的好不好后看算法的技术参数角度，看cost function指标 比如logloss  epoch-loss 熵 等指标，不同算法不一样，结合不同样本的分类效果，感受你需要调整的参数，最后看具体模型的非技术参数角度，主要看precision和recall就行了。</li>
+<li><strong>冠军模型的选择问题：</strong>如果是分类算法，假设各个模型都调到最优了，各个模型对着原始分布测试集跑一遍，看一下ROC，看测出来的AUC和KS之类的高阶指标就能解决冠军模型的筛选问题。</li>
+<li><strong>模型部署的最终业务决策：</strong>主要靠测试集的precision和recall这种比较直接浅显的指标来解决，更重要的是要基于ROC或者别的曲线，甚至是直接模型上马以后，输入现实的成本和收益指标，去算不同pentile分数段的ROI等等(往往是看不同分数段的召回率，及其每召回一个需要付出的人工审核成本，毕竟几十个只有一个是真的坏账)，帮助老板做预算决策，因为数据挖掘模型的部署，往往意味着成本投入，和原有业务的重构。</li>
+</ol>
+
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
 			 
         		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
+        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
         		</li>
       		
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?s1ze=150x150&data=http://https://star-gazers.github.io021/08/17/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E7%9A%84%E7%94%A8%E6%B3%95/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/03/17/My-first-blog/" class="archive-article-date">
-  	<time datetime="2021-03-17T05:14:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-03-17</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/08/17/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%20/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">滴滴面经</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/03/17/My-first-blog/">My first blog</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E7%9A%84%E7%94%A8%E6%B3%95"><span class="toc-number">1.</span> <span class="toc-text">评价指标的用法</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A6%82%E4%BD%95%E8%A1%A1%E9%87%8F%E4%B8%80%E4%B8%AA%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0%E6%A8%A1%E5%9E%8B%E7%9A%84%E6%95%88%E6%9E%9C%EF%BC%9F"><span class="toc-number">1.1.</span> <span class="toc-text">如何衡量一个机器学习模型的效果？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%8F%AA%E7%9C%8B%E5%87%86%E7%A1%AE%E7%8E%87%E4%B8%8D%E8%B6%B3%E4%BB%A5%E5%85%A8%E9%9D%A2%E8%A1%A1%E9%87%8F%E6%A8%A1%E5%9E%8B%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">为什么只看准确率不足以全面衡量模型？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Recall-%E5%92%8C-Precision"><span class="toc-number">1.3.</span> <span class="toc-text">Recall 和 Precision</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#F1-Score"><span class="toc-number">1.4.</span> <span class="toc-text">F1 Score</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ROC-%E5%92%8C-ROC-AUC"><span class="toc-number">1.5.</span> <span class="toc-text">ROC 和 ROC_AUC</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Precision-Recall-curve"><span class="toc-number">1.6.</span> <span class="toc-text">Precision-Recall curve</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
   
-    </div></section>
   
 
-    
-    <nav id="page-nav">
-      <a class="extend prev" rel="prev" href="/archives/">&amp;laquo; Prev</a><a class="page-number" href="/archives/">1</a><span class="page-number current">2</span>
-    </nav>
   
+
+  
+
+  
+
 
 
           </div>
@@ -274,8 +408,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
