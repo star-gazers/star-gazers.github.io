@@ -6,15 +6,22 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Archives: 2021/8 | Hexo</title>
+  <title>解开交叉熵神秘的面纱 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2021/08/index.html">
+  <meta name="description" content="交叉熵">
+<meta property="og:type" content="article">
+<meta property="og:title" content="解开交叉熵神秘的面纱">
+<meta property="og:url" content="http://example.com/2021/08/19/%E4%BA%A4%E5%8F%89%E7%86%B5/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="交叉熵">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/Hp.jpg">
+<meta property="article:published_time" content="2021-08-18T16:06:47.000Z">
+<meta property="article:modified_time" content="2021-08-18T16:06:05.268Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="机器学习">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/Hp.jpg">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -157,35 +164,92 @@
           </div>
           <div id="js-content" class="content-ll">
             
+}
+<article id="post-交叉熵" class="article article-type-post " itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
   
+    <h1 class="article-title" itemprop="name">
+      解开交叉熵神秘的面纱
+    </h1>
   
-    
-    
-      
-      
-      <section class="archives-wrap">
-        <div class="archive-year-wrap">
-          <a href="/archives/2021" class="archive-year">2021</a>
-        </div>
-        <div class="archives">
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/19/%E4%BA%A4%E5%8F%89%E7%86%B5/" class="archive-article-date">
+
+        
+        <a href="/2021/08/19/%E4%BA%A4%E5%8F%89%E7%86%B5/" class="archive-article-date">
   	<time datetime="2021-08-18T16:06:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-19</time>
 </a>
-        </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/08/19/%E4%BA%A4%E5%8F%89%E7%86%B5/">解开交叉熵神秘的面纱</a>
-    </h1>
-  
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h1 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h1><span id="more"></span>
+<h2 id="交叉熵（Cross-Entropy）"><a href="#交叉熵（Cross-Entropy）" class="headerlink" title="交叉熵（Cross-Entropy）"></a>交叉熵（Cross-Entropy）</h2><p>交叉熵是一个在ML领域经常会被提到的名词。在面试的时候也多次被问到，什么是交叉熵？交叉熵和极大似然估计有啥区别？这篇文章将对这个概念进行详细的分析。</p>
+<h2 id="1-什么是信息量？"><a href="#1-什么是信息量？" class="headerlink" title="1.什么是信息量？"></a>1.什么是信息量？</h2><p>假设$X$是一个离散型的随机变量，它的取值集合为$\mathcal{X}$，概率分布函数为$p(x)=Pr(X=x),x∈\mathcal{X}$，我们定义事件$X=x_0$的信息量为：$I(x_0)=-log(p(x_0))$，可以理解为：可以理解为，一个事件发生的概率越大，则它所携带的信息量就越小，而当$p(x_0)=1$时，熵将等于0，也就是说该事件的发生不会导致任何信息量的增加。举个例子，小明平时不爱学习，考试经常不及格，而小王是个勤奋学习的好学生，经常得满分，所以我们可以做如下假设：</p>
+<ul>
+<li>事件A：小明考试及格，对应的概率$P(x_A)=0.1$，信息量为$I(x_A)=-\log(0.1)=3.3219$</li>
+<li>事件B：小王考试及格，对应的概率$P(x_B)=0.999$，信息量为$I(x_B)=-\log(0.999)=0.0014$</li>
+</ul>
+<p>可以看出，结果非常直观：小明及格的可能性很低(十次考试只有一次及格)，因此如果某次考试及格了（大家都会说：XXX竟然及格了！），必然会引入较大的信息量，对应的$I$值也较高。而对于小王而言，考试及格是大概率事件，在事件B发生前，大家普遍认为事件B的发生几乎是确定的，因此当某次考试小王及格这个事件发生时并不会引入太多的信息量，相应的$I$值也非常的低。</p>
+<h2 id="2-什么是熵？"><a href="#2-什么是熵？" class="headerlink" title="2.什么是熵？"></a>2.什么是熵？</h2><p>那么什么又是熵呢？还是通过上边的例子来说明，假设小明的考试结果是一个0-1分布$\mathcal{X}_A$只有两个取值{0：不及格，1：及格}，在某次考试结果公布前，小明的考试结果有多大的不确定度呢？你肯定会说：十有八九不及格！因为根据先验知识，小明及格的概率仅有0.1,90%的可能都是不及格的。怎么来度量这个不确定度？求期望！不错，我们对所有可能结果带来的额外信息量求取均值（期望），其结果不就能够衡量出小明考试成绩的不确定度了吗。</p>
+<p>小明的熵：</p>
+<script type="math/tex; mode=display">H_A(x)=-[p(x_A)\log(p(x_A))+(1-p(x_A))\log(1-p(x_A))]=0.4690</script><p>对应小王的熵：</p>
+<script type="math/tex; mode=display">H_B(x)=-[p(x_B)\log(p(x_B))+(1-p(x_B))\log(1-p(x_B))]=0.0114</script><p>虽然小明考试结果的不确定性较低，毕竟十次有9次都不及格，但是也比不上小王（1000次考试只有一次才可能不及格，结果相当的确定）</p>
+<p>我们再假设一个成绩相对普通的学生小东，他及格的概率是P(xC)=0.5,即及格与否的概率是一样的，对应的熵：</p>
+<script type="math/tex; mode=display">H_C(x)=-[p(x_C)\log(p(x_C))+(1-p(x_C))\log(1-p(x_C))]=1</script><p>其熵为1（是我本人没错了），他的不确定性比前边两位同学要高很多，在成绩公布之前，很难准确猜测出他的考试结果。</p>
+<p>可以看出，熵其实是信息量的期望值，它是一个随机变量的确定性的度量。熵越大，变量的取值越不确定，反之就越确定。</p>
+<p>对于一个随机变量X而言，它的所有可能取值的信息量的期望$E[I(x)]$就称为熵。</p>
+<p>$X$的熵定义为：</p>
+<script type="math/tex; mode=display">H(X)=E_p\log \frac{1}{p(x)}=-\sum\limits_{x∈X}p(x)\log p(x)</script><p>如果p(x)是连续型随机变量的pdf，则熵定义为：</p>
+<script type="math/tex; mode=display">H(X)=-\int\limits_{x∈X}p(x)\log p(x)dx</script><p>为了保证有效性，这里约定当$p(x)\rightarrow 0$时，有$p(x)\log p(x)\rightarrow 0$</p>
+<p>当$X$为0-1分布时，熵与概率p的关系如下图：</p>
+<p><img src="/../img/Hp.jpg" alt="Hp.jpg"></p>
+<p>可以看出，当两种取值的可能性相等时，不确定度最大（此时没有任何先验知识），这个结论可以推广到多种取值的情况。在图中也可以看出，当p=0或1时，熵为0，即此时$X$完全确定。</p>
+<h2 id="3-什么是相对熵？"><a href="#3-什么是相对熵？" class="headerlink" title="3.什么是相对熵？"></a>3.什么是相对熵？</h2><p>相对熵(relative entropy)又称为KL散度（Kullback-Leibler divergence），KL距离，是两个随机分布间距离的度量。记为$D_{KL}(p||q)$。它度量当真实分布为p时，假设分布q的无效性。</p>
+<script type="math/tex; mode=display">D_{KL}(p||q)=E_p[\log \frac{p(x)}{q(x)}]=\sum\limits_{x∈\mathcal{X}} p(x)\log \frac{p(x)}{q(x)}</script><script type="math/tex; mode=display">=\sum\limits_{x∈\mathcal{X}} [p(x)\log p(x)-p(x)\log q(x)]</script><script type="math/tex; mode=display">=\sum\limits_{x∈\mathcal{X}} p(x)\log p(x)-\sum\limits_{x∈\mathcal{X}} p(x)\log q(x)</script><script type="math/tex; mode=display">=−H(p)−∑x∈Xp(x)logq(x)</script><script type="math/tex; mode=display">=-H(p)+E_p[-\log q(x)]</script><script type="math/tex; mode=display">=Hp(q)−H(p)</script><p>并且为了保证连续性，做如下约定：</p>
+<script type="math/tex; mode=display">0\log \frac{0}{0}=0，0\log \frac{0}{q}=0，p\log \frac{p}{0}=∞</script><p>显然，当$p=q$时,两者之间的相对熵$D_{KL}(p||q)=0$</p>
+<p>上式最后的$H<em>p(q)$表示在$p$分布下，使用$q$进行编码需要的bit数，而$H(p)$表示对真实分布$p$所需要的最小编码bit数。基于此，相对熵的意义就很明确了：$D</em>{KL}(p||q)$表示在真实分布为$p$的前提下，使用$q$分布进行编码相对于使用真实分布$p$进行编码（即最优编码）所多出来的bit数。</p>
+<h2 id="4-什么是交叉熵？"><a href="#4-什么是交叉熵？" class="headerlink" title="4. 什么是交叉熵？"></a>4. 什么是交叉熵？</h2><p>交叉熵容易跟相对熵搞混，二者联系紧密，但又有所区别。假设有两个分布$p,q$，则它们在给定样本集上的交叉熵定义如下：</p>
+<script type="math/tex; mode=display">CEH(p,q)=E_p[-\log q]=-\sum\limits_{x∈\mathcal{X}} p(x)\log q(x)=H(p)+D_{KL}(p||q)</script><p>可以看出，交叉熵与上一节定义的相对熵仅相差了$H(p)$,当$p$已知时，可以把$H(p)$看做一个常数，此时交叉熵与$KL$距离在行为上是等价的，都反映了分布$p，q$的相似程度。最小化交叉熵等于最小化KL距离。它们都将在$p=q$时取得最小值$H(p)$（$p=q$时$KL$距离为0），因此有的工程文献中将最小化$KL$距离的方法称为Principle of Minimum Cross-Entropy (MCE)或Minxent方法。</p>
+<p>特别的，在logistic regression中：</p>
+<ul>
+<li>p:真实样本分布，服从参数为p的0-1分布，即$X \sim B(1,p)$</li>
+<li>q:待估计的模型，服从参数为q的0-1分布，即$X \sim B(1,q)$</li>
+</ul>
+<p>两者的交叉熵为：</p>
+<script type="math/tex; mode=display">CEH(p,q)</script><script type="math/tex; mode=display">=-\sum\limits_{x∈\mathcal{X}} \textbf{p(x)}\log \textbf{q(x)}</script><script type="math/tex; mode=display">=-[P_p(x=1)\log P_q(x=1)+P_p(x=0)\log P_q(x=0)]</script><script type="math/tex; mode=display">=-[p\log q+(1-p)\log (1-q)]</script><script type="math/tex; mode=display">=-[\textbf{y}\log \textbf{h}_{\theta}(x)+(1-\textbf{y})\log (1-\textbf{h}_{\theta}(x))]</script><p>对所有训练样本取均值得：</p>
+<script type="math/tex; mode=display">-\frac{1}{m}\sum\limits_{i=1}^m[y^{(i)}\log h_{\theta}(x^{(i)})+(1-y^{(i)})\log (1-h_{\theta}(x^{(i)}))]</script><p>这个结果与通过最大似然估计方法求出来的结果一致。</p>
 
-        <div class="article-info info-on-right">
-          
+      
+
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
 	<div class="article-tag tagcloud">
 		<i class="icon-price-tags icon"></i>
 		<ul class="article-tag-list">
@@ -197,95 +261,120 @@
 		</ul>
 	</div>
 
-          
+      
 
+      
+
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
         </div>
-        <div class="clearfix"></div>
-    </header>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?s1ze=150x150&data=http://https://star-gazers.github.io021/08/19/%E4%BA%A4%E5%8F%89%E7%86%B5/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
+      
+      <div class="clearfix"></div>
+    </div>
   </div>
 </article>
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/17/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E7%9A%84%E7%94%A8%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2021-08-17T15:05:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-17</time>
-</a>
+<nav id="article-nav">
+  
+  
+    <a href="/2021/08/17/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E7%9A%84%E7%94%A8%E6%B3%95/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">评价指标</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
         </div>
-    	 
-  
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/08/17/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E7%9A%84%E7%94%A8%E6%B3%95/">评价指标</a>
-    </h1>
-  
-
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
+        
+        
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5"><span class="toc-number">1.</span> <span class="toc-text">交叉熵</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%A4%E5%8F%89%E7%86%B5%EF%BC%88Cross-Entropy%EF%BC%89"><span class="toc-number">1.1.</span> <span class="toc-text">交叉熵（Cross-Entropy）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#1-%E4%BB%80%E4%B9%88%E6%98%AF%E4%BF%A1%E6%81%AF%E9%87%8F%EF%BC%9F"><span class="toc-number">1.2.</span> <span class="toc-text">1.什么是信息量？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-%E4%BB%80%E4%B9%88%E6%98%AF%E7%86%B5%EF%BC%9F"><span class="toc-number">1.3.</span> <span class="toc-text">2.什么是熵？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E4%BB%80%E4%B9%88%E6%98%AF%E7%9B%B8%E5%AF%B9%E7%86%B5%EF%BC%9F"><span class="toc-number">1.4.</span> <span class="toc-text">3.什么是相对熵？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#4-%E4%BB%80%E4%B9%88%E6%98%AF%E4%BA%A4%E5%8F%89%E7%86%B5%EF%BC%9F"><span class="toc-number">1.5.</span> <span class="toc-text">4. 什么是交叉熵？</span></a></li></ol></li></ol>
+                    </div>
+                </span>
+            </div>
         </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
+        
+    </div>
+</aside>
+
+
+
   
-    
-    
-    <article class="archive-article archive-type-post">
-  <div class="archive-article-inner">
-    <header class="archive-article-header">
-      	<div class="article-meta">
-	      	<a href="/2021/08/17/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%20/" class="archive-article-date">
-  	<time datetime="2021-08-17T07:24:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-17</time>
-</a>
-        </div>
-    	 
   
-    <h1 itemprop="name">
-      <a class="archive-article-title" href="/2021/08/17/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%20/">滴滴面经</a>
-    </h1>
   
 
-        <div class="article-info info-on-right">
-          
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">实习面试</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-          
-
-        </div>
-        <div class="clearfix"></div>
-    </header>
-  </div>
-</article>
-  
-  
-    </div></section>
   
 
-    
+  
+
+  
+
 
 
           </div>
@@ -308,8 +397,8 @@
 	var yiliaConfig = {
 		mathjax: true,
 		isHome: false,
-		isPost: false,
-		isArchive: true,
+		isPost: true,
+		isArchive: false,
 		isTag: false,
 		isCategory: false,
 		open_in_new: false,
