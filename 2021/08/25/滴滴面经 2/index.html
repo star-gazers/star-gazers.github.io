@@ -6,15 +6,25 @@
   <meta name="renderer" content="webkit">
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <link rel="dns-prefetch" href="http://example.com">
-  <title>Hexo</title>
+  <title>滴滴面经 | Hexo</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/index.html">
+  <meta name="description" content="滴滴算法工程师二面">
+<meta property="og:type" content="article">
+<meta property="og:title" content="滴滴面经">
+<meta property="og:url" content="http://example.com/2021/08/25/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%202/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="滴滴算法工程师二面">
 <meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/1.png">
+<meta property="og:image" content="http://example.com/img/TWO.png">
+<meta property="og:image" content="http://example.com/img/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97.png">
+<meta property="og:image" content="http://example.com/img/%E8%A1%8C%E9%87%87%E6%A0%B7%E5%85%AC%E5%BC%8F.png">
+<meta property="article:published_time" content="2021-08-25T08:52:47.000Z">
+<meta property="article:modified_time" content="2021-08-25T08:53:55.806Z">
 <meta property="article:author" content="John Doe">
+<meta property="article:tag" content="实习面试">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/1.png">
   
     <link rel="alternative" href="/atom.xml" title="Hexo" type="application/atom+xml">
   
@@ -157,15 +167,15 @@
           </div>
           <div id="js-content" class="content-ll">
             
-  
-    <article id="post-滴滴面经 2" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+}
+<article id="post-滴滴面经 2" class="article article-type-post " itemscope itemprop="blogPost">
   <div class="article-inner">
     
       <header class="article-header">
         
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/25/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%202/">滴滴面经</a>
+    <h1 class="article-title" itemprop="name">
+      滴滴面经
     </h1>
   
 
@@ -178,12 +188,95 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <h1 id="滴滴算法工程师二面"><a href="#滴滴算法工程师二面" class="headerlink" title="滴滴算法工程师二面"></a>滴滴算法工程师二面</h1>
-        
-          <a class="article-more-a" href="/2021/08/25/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%202/#more">more >></a>
-        
+        <h1 id="滴滴算法工程师二面"><a href="#滴滴算法工程师二面" class="headerlink" title="滴滴算法工程师二面"></a>滴滴算法工程师二面</h1><span id="more"></span>
+<h3 id="滴滴-二面-2021-8-3-面试时长：50分钟"><a href="#滴滴-二面-2021-8-3-面试时长：50分钟" class="headerlink" title="滴滴 二面 2021.8.3 面试时长：50分钟"></a>滴滴 二面 2021.8.3 面试时长：50分钟</h3><p>1.自我介绍<br>2.深挖牙齿图像项目<br>3.聚类方法，构建了哪些特征<br>4.kmeans聚类中使用的距离，以及如何结束<br>5.贷款预测项目介绍<br>6.决策树模型与逻辑回归模型的区别？</p>
+<ol>
+<li>逻辑回归通常用于分类问题，决策树可回归、可分类</li>
+<li>逻辑回归是线性函数，决策树是非线性函数</li>
+<li>逻辑回归的表达形式简单，回归系数确定了模型。决策树的形式就更复杂了，叶子节点的范围+取值。两个模型都有很强的可解释性。</li>
+<li>逻辑回归可用于高维稀疏数据场景，比如CTR预估；决策树变量是连续变量最好，类别变量的稀疏性不能太高。</li>
+<li>逻辑回归的核心是sigmoid函数，具有无限可导的优点。</li>
+<li>逻辑回归可以实现并行计算</li>
+</ol>
+<p>7.逻辑回归如何实现并行计算？</p>
+<p><strong>并行化的数学原理：</strong></p>
+<p>$Logistic$回归偏导数的求法：</p>
+<p><img src="/../img/1.png" alt="1.png"></p>
+<p>在此，我们可以将数据集打散（注：即“划分”，要满足不重、不漏两个条件）成C块：</p>
+<p><img src="/../img/TWO.png" alt="2.png"></p>
+<p>8.逻辑回归的原理是什么，极大似然估计又是什么？<br>9.什么是交叉熵，交叉熵损失函数是什么，求偏导后的形式是什么，为什么不用MSE？</p>
+<p><a target="_blank" rel="noopener" href="https://gazer.top/2021/08/19/%E4%BA%A4%E5%8F%89%E7%86%B5/#more">交叉熵见此博客</a></p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/lafengxiaoyu/article/details/109916750">MSE与交叉熵见此博客</a></p>
+<p>10.逻辑回归如何更新权重，梯度下降法有哪些？</p>
+<p><a target="_blank" rel="noopener" href="https://www.cnblogs.com/shixiangwan/p/7532830.html">梯度下降法见此博客</a></p>
+<p>11.xgb模型如何实现的？<br>12.划分特征值的block后怎样才算并行<br>13.决策树模型预测的全过程？<br>14.叶子节点是什么，节点又是什么（比例比较多的样本）<br>15.决策树如何才能够停止，xgb的列采样和rf的列采样？</p>
+<p><strong>终止条件：</strong></p>
+<ol>
+<li>子节点中的样本属于同一类</li>
+<li>该子节点没有样本了</li>
+<li>特征已经用完了</li>
+</ol>
+<p><strong>随机森林：</strong></p>
+<p>随机森林是一种以决策树为基分类器的集成算法，通过组合多棵独立的决策树后根据投票或取均值的方式得到最终预测结果的机器学习方法，往往比单棵树具有更高的准确率和更强的稳定性。随机森林相比于决策树拥有出色的性能主要取决于<strong>随机抽取样本和特征</strong>和<strong>集成算法</strong>，前者让它具有更稳定的抗过拟合能力，后者让它有更高的准确率。</p>
+<p><img src="/../img/%E9%9A%8F%E6%9C%BA%E6%A3%AE%E6%9E%97.png" alt="随机森林.png"></p>
+<ol>
+<li><strong>基分类器的生成</strong>：随机森林本质上是一种集成算法，由众多的基分类器组成。其中组成随机森林的基分类器是CART树，各棵决策树独立生成且完全分裂，既可以解决分类问题又可以解决回归问题。</li>
+<li><p><strong>随机化：</strong>随机森林为了保证较强的抗过拟合和抗噪声能力，在构建每一棵CART决策树的时候采用了行抽样和列抽样的随机化方法。</p>
+<ul>
+<li><p><strong>行采样</strong></p>
+<p>假设训练集的数据行数为N，对于每一棵CART树，我们从N个原始样本中有放回地随机抽取N个作为单棵树的训练集。假设随机森林中CART树数目为K，那么我们通过该办法生成K个独立的训练集用于CART的训练。</p>
+<p>对于单独一个样本而言，它在N次有放回地随机抽样中都不被抽中的概率是：</p>
+<p><img src="/../img/%E8%A1%8C%E9%87%87%E6%A0%B7%E5%85%AC%E5%BC%8F.png" alt="行采样公式.png"></p>
+<p>当N足够大时，该式的结果约等于0.368，即在每一轮行抽样大概有36.8%的数据始终不会被采集到。</p>
+</li>
+<li><p><strong>列抽样</strong></p>
+<p>假设原始数据集的特征数为M，在通过行采样获取每棵CART树的训练集后，随机森林会随机选取m个特征（m &lt; M）训练用于每一棵CART树的生成。当m越小时，模型的抗干扰性和抗过拟合性越强，但是模型的准确率会下降，因此在实际建模过程中，常需要用交叉验证等方式选择合适的m值。</p>
+</li>
+</ul>
+</li>
+</ol>
+<p><strong>XGBoost的列抽样：</strong></p>
+<p>除了借鉴随机森林的列抽样形式，在选择最佳增益分割点时能够多线程并行化的计算。</p>
+<p>16.对于决策树模型，在回归问题中，连续特征是如何处理的，结果又是如何生成的？</p>
+<p>结果是计算所有分割点两边区域的平均值与分割点的损失，并确认最佳分割点。</p>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/Albert201605/article/details/81865261">详细内容请转至改博客</a></p>
+<p>17.softmax是什么，与sigmoid又有什么区别，哪些场景用到过？</p>
+<p><a target="_blank" rel="noopener" href="https://www.zhihu.com/question/269431756/answer/1779010934">详细内容请转至改博客</a></p>
+<p>18.车辆价格预测项目中类别特征怎么处理的？<br>19.连续特征呈现拖尾分布怎么处理？</p>
+<p>1.类似于数据不平衡如何解决，有常见的如：重采样、数据结合等方法。</p>
+<p>2.如果要避免数值之间相差过大，比如100、10000，造成超平面的偏移，可以取log（）降低数值范围。</p>
+<p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/259710601">3.如果要提取不平衡数据中的“价值”，提供了非常珍贵的监督信息，可以拜读这篇博客。</a></p>
+<p>20.回归问题用的什么评价指标，mse和mae的区别？</p>
+<p><strong>平均绝对误差(MAE)</strong></p>
+<p>平均绝对误差MAE（Mean Absolute Error）又被称为 L1范数损失。</p>
+<script type="math/tex; mode=display">MAE=\frac{1}{n}\sum_{i=1}^{n}|y_i-\hat{y}_i|</script><p>MAE虽能较好衡量回归模型的好坏，但是绝对值的存在导致函数不光滑，在某些点上不能求导，可以考虑将绝对值改为残差的平方，这就是均方误差。</p>
+<p><strong>均方误差(MSE)</strong></p>
+<p>均方误差MSE（Mean Squared Error）又被称为 L2范数损失 。</p>
+<script type="math/tex; mode=display">MSE=\frac{1}{n}\sum_{i=1}^{n}(y_i-\hat{y}_i)^2</script><p>21.大数据处理工具熟练程度？<br>22.手撕代码，输入数组，实现数组的全排列</p>
+
       
 
+      
+        <div class="page-reward">
+          <a href="javascript:;" class="page-reward-btn tooltip-top">
+            <div class="tooltip tooltip-east">
+            <span class="tooltip-item">
+              赏
+            </span>
+            <span class="tooltip-content">
+              <span class="tooltip-text">
+                <span class="tooltip-inner">
+                  <p class="reward-p"><i class="icon icon-quo-left"></i>谢谢你请我吃糖果<i class="icon icon-quo-right"></i></p>
+                  <div class="reward-box">
+                    
+                    
+                  </div>
+                </span>
+              </span>
+            </span>
+          </div>
+          </a>
+        </div>
       
     </div>
     <div class="article-info article-info-index">
@@ -203,16 +296,75 @@
       
 
       
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/08/25/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%202/">展开全文 >></a>
-        </p>
-      
 
+      
+        
+<div class="share-btn share-icons tooltip-left">
+  <div class="tooltip tooltip-east">
+    <span class="tooltip-item">
+      <a href="javascript:;" class="share-sns share-outer">
+        <i class="icon icon-share"></i>
+      </a>
+    </span>
+    <span class="tooltip-content">
+      <div class="share-wrap">
+        <div class="share-icons">
+          <a class="weibo share-sns" href="javascript:;" data-type="weibo">
+            <i class="icon icon-weibo"></i>
+          </a>
+          <a class="weixin share-sns wxFab" href="javascript:;" data-type="weixin">
+            <i class="icon icon-weixin"></i>
+          </a>
+          <a class="qq share-sns" href="javascript:;" data-type="qq">
+            <i class="icon icon-qq"></i>
+          </a>
+          <a class="douban share-sns" href="javascript:;" data-type="douban">
+            <i class="icon icon-douban"></i>
+          </a>
+          <a class="qzone share-sns" href="javascript:;" data-type="qzone">
+            <i class="icon icon-qzone"></i>
+          </a>
+          <a class="facebook share-sns" href="javascript:;" data-type="facebook">
+            <i class="icon icon-facebook"></i>
+          </a>
+          <a class="twitter share-sns" href="javascript:;" data-type="twitter">
+            <i class="icon icon-twitter"></i>
+          </a>
+          <a class="google share-sns" href="javascript:;" data-type="google">
+            <i class="icon icon-google"></i>
+          </a>
+        </div>
+      </div>
+    </span>
+  </div>
+</div>
+
+<div class="page-modal wx-share js-wx-box">
+    <a class="close js-modal-close" href="javascript:;"><i class="icon icon-close"></i></a>
+    <p>扫一扫，分享到微信</p>
+    <div class="wx-qrcode">
+      <img src="//api.qrserver.com/v1/create-qr-code/?s1ze=150x150&data=http://https://star-gazers.github.io021/08/25/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%202/" alt="微信分享二维码">
+    </div>
+</div>
+
+<div class="mask js-mask"></div>
       
       <div class="clearfix"></div>
     </div>
   </div>
 </article>
+
+  
+<nav id="article-nav">
+  
+  
+    <a href="/2021/08/19/%E4%BA%A4%E5%8F%89%E7%86%B5/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">解开交叉熵神秘的面纱</div>
+      <i class="icon-circle-right"></i>
+    </a>
+  
+</nav>
+
 
 <aside class="wrap-side-operation">
     <div class="mod-side-operation">
@@ -227,702 +379,34 @@
         </div>
         
         
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-交叉熵" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/19/%E4%BA%A4%E5%8F%89%E7%86%B5/">解开交叉熵神秘的面纱</a>
-    </h1>
-  
-
-        
-        <a href="/2021/08/19/%E4%BA%A4%E5%8F%89%E7%86%B5/" class="archive-article-date">
-  	<time datetime="2021-08-18T16:06:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="交叉熵"><a href="#交叉熵" class="headerlink" title="交叉熵"></a>交叉熵</h1>
-        
-          <a class="article-more-a" href="/2021/08/19/%E4%BA%A4%E5%8F%89%E7%86%B5/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/08/19/%E4%BA%A4%E5%8F%89%E7%86%B5/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
+        <div class="toc-container tooltip-left">
+            <i class="icon-font icon-category"></i>
+            <div class="tooltip tooltip-east">
+                <span class="tooltip-item">
+                </span>
+                <span class="tooltip-content">
+                    <div class="toc-article">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%BB%B4%E6%BB%B4%E7%AE%97%E6%B3%95%E5%B7%A5%E7%A8%8B%E5%B8%88%E4%BA%8C%E9%9D%A2"><span class="toc-number">1.</span> <span class="toc-text">滴滴算法工程师二面</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%BB%B4%E6%BB%B4-%E4%BA%8C%E9%9D%A2-2021-8-3-%E9%9D%A2%E8%AF%95%E6%97%B6%E9%95%BF%EF%BC%9A50%E5%88%86%E9%92%9F"><span class="toc-number">1.0.1.</span> <span class="toc-text">滴滴 二面 2021.8.3 面试时长：50分钟</span></a></li></ol></li></ol></li></ol>
+                    </div>
+                </span>
             </div>
         </div>
         
-        
     </div>
 </aside>
 
 
 
-
-  
-    <article id="post-评价指标的用法" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/17/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E7%9A%84%E7%94%A8%E6%B3%95/">评价指标</a>
-    </h1>
-  
-
-        
-        <a href="/2021/08/17/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E7%9A%84%E7%94%A8%E6%B3%95/" class="archive-article-date">
-  	<time datetime="2021-08-17T15:05:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="评价指标的用法"><a href="#评价指标的用法" class="headerlink" title="评价指标的用法"></a>评价指标的用法</h1>
-        
-          <a class="article-more-a" href="/2021/08/17/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E7%9A%84%E7%94%A8%E6%B3%95/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/08/17/%E8%AF%84%E4%BB%B7%E6%8C%87%E6%A0%87%E7%9A%84%E7%94%A8%E6%B3%95/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-滴滴面经 " class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/08/17/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%20/">滴滴面经</a>
-    </h1>
-  
-
-        
-        <a href="/2021/08/17/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%20/" class="archive-article-date">
-  	<time datetime="2021-08-17T07:24:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-08-17</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="滴滴算法工程师一面"><a href="#滴滴算法工程师一面" class="headerlink" title="滴滴算法工程师一面"></a>滴滴算法工程师一面</h1>
-        
-          <a class="article-more-a" href="/2021/08/17/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%20/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">实习面试</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/08/17/%E6%BB%B4%E6%BB%B4%E9%9D%A2%E7%BB%8F%20/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-06-支持向量机" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/29/06-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">嗑西瓜书——支持向量机篇</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/29/06-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/" class="archive-article-date">
-  	<time datetime="2021-07-29T11:08:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-29</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Chapter-6-支持向量机"><a href="#Chapter-6-支持向量机" class="headerlink" title="Chapter 6 支持向量机"></a>Chapter 6 支持向量机</h1>
-        
-          <a class="article-more-a" href="/2021/07/29/06-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/29/06-%E6%94%AF%E6%8C%81%E5%90%91%E9%87%8F%E6%9C%BA/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-chapter5" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/25/chapter5/">嗑西瓜书——神经网络篇</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/25/chapter5/" class="archive-article-date">
-  	<time datetime="2021-07-25T11:08:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-25</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Chapter-5-神经网络"><a href="#Chapter-5-神经网络" class="headerlink" title="Chapter 5 神经网络"></a>Chapter 5 神经网络</h1>
-        
-          <a class="article-more-a" href="/2021/07/25/chapter5/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/25/chapter5/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-chapter4" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/23/chapter4/">嗑西瓜书——决策树篇</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/23/chapter4/" class="archive-article-date">
-  	<time datetime="2021-07-22T17:07:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-23</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Chapter-4-决策树"><a href="#Chapter-4-决策树" class="headerlink" title="Chapter 4 决策树"></a>Chapter 4 决策树</h1>
-        
-          <a class="article-more-a" href="/2021/07/23/chapter4/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/23/chapter4/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-chapter3" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/07/19/chapter3/">嗑西瓜书——线性回归篇</a>
-    </h1>
-  
-
-        
-        <a href="/2021/07/19/chapter3/" class="archive-article-date">
-  	<time datetime="2021-07-19T15:49:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-07-19</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="Chapter3-线性模型"><a href="#Chapter3-线性模型" class="headerlink" title="Chapter3-线性模型"></a>Chapter3-线性模型</h1>
-        
-          <a class="article-more-a" href="/2021/07/19/chapter3/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color5">机器学习</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/07/19/chapter3/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-grid" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/18/grid/">记录前端日常知识点——HTML、CSS</a>
-    </h1>
-  
-
-        
-        <a href="/2021/04/18/grid/" class="archive-article-date">
-  	<time datetime="2021-04-18T03:46:47.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前端知识点记录——CSS-Grid-网格布局"><a href="#前端知识点记录——CSS-Grid-网格布局" class="headerlink" title="前端知识点记录——CSS Grid 网格布局"></a>前端知识点记录——CSS Grid 网格布局</h1>
-        
-          <a class="article-more-a" href="/2021/04/18/grid/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/04/18/grid/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
-    <article id="post-2021-4-18" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2021/04/18/2021-4-18/">记录前端日常知识点——HTML、CSS</a>
-    </h1>
-  
-
-        
-        <a href="/2021/04/18/2021-4-18/" class="archive-article-date">
-  	<time datetime="2021-04-17T16:06:11.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2021-04-18</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <h1 id="前端知识点记录-Flex"><a href="#前端知识点记录-Flex" class="headerlink" title="前端知识点记录-Flex"></a>前端知识点记录-Flex</h1>
-        
-          <a class="article-more-a" href="/2021/04/18/2021-4-18/#more">more >></a>
-        
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<i class="icon-price-tags icon"></i>
-		<ul class="article-tag-list">
-			 
-        		<li class="article-tag-list-item">
-        			<a href="javascript:void(0)" class="js-tag article-tag-list-link color3">随笔</a>
-        		</li>
-      		
-		</ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2021/04/18/2021-4-18/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
   
   
-    <nav id="page-nav">
-      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
-    </nav>
   
+
+  
+
+  
+
+  
+
 
 
           </div>
@@ -944,8 +428,8 @@
     <script>
 	var yiliaConfig = {
 		mathjax: true,
-		isHome: true,
-		isPost: false,
+		isHome: false,
+		isPost: true,
 		isArchive: false,
 		isTag: false,
 		isCategory: false,
